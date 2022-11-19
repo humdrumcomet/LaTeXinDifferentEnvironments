@@ -1,0 +1,32 @@
+% arara: lualatex: { shell: true}
+% arara: lualatex: { shell: true}
+
+\providecommand{\toplevel}{../../../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+\documentclass[tikz, hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+        \begin{tikzpicture}
+                \draw[->] (0,0)--(13,0) node[below right]{$x$};
+                \draw[->] (0,0)--(0,7.5) node[left]{\gls{ener}};
+                \draw (0,6.5)node[left]{\gls{econd}}--(4,6.5);
+                \draw (8,4)--(12,4) node[right]{\gls{econd}};
+                \draw (4,6.5) to [out=0, in=180] (8,4);
+                \draw (0,3)node[left]{\gls{evalence}}--(4,3);
+                \draw (8,0.5)--(12,0.5) node[right]{\gls{evalence}};
+                \draw (4,3) to [out=0, in=180] (8,0.5);
+                \draw[dashed] (0,3.5)node[left]{$\gls{efermi}_{p}$}--(12,3.5)node[right]{$\gls{efermi}_{n}$};
+                \draw[dashed] (6,0)--(6,6.5)node[above]{$PN-Junction$};
+                \draw[<->] (11,0.5)--(11,4);
+                \node[right]  at (11,2.5){\gls{egap}};
+                \node at (2,1.5){$P-Type$};
+                \node at (10,5.5){$N-Type$};
+        \end{tikzpicture}
+\end{document}

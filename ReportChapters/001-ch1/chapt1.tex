@@ -4,9 +4,10 @@
 % arara: lualatex: { shell: true, interaction: nonstopmode }
 % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
 
-\providecommand{\sharedPath}{../../Shared}
-\providecommand{\assetPath}{../../Assets}
-\providecommand{\importPath}{\sharedPath/Imports}
+\providecommand{\toplevel}{../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
 
 \documentclass[hidelinks, float=false, crop=false]{standalone}
 
@@ -22,10 +23,8 @@
 
                 Of the many great aspects to tikz, one of my favourites is the consistency of font, and the ability to even include those symbols as discussed previously.
 
-                \ExecuteMetaData[\importPath/assets.tex]{tikzDiag}
 
                 Maybe you'd like to plot some data in a csv file?
-                \ExecuteMetaData[\importPath/assets.tex]{tikzplot}
 
         \subsection{standalone}
             For simplification, you can have your tikz pictures in separate files for easy compilation and verification of the tikz picture.
@@ -44,14 +43,22 @@
     \section{catchfilebetweentags Package}
         \subsection{catchfilebetweentags}
             This handy package allows you to store a bunch of different things (say for example, equations) and pull them in to your document. This is really nice because it makes your document's code more easily read. It also makes it that you can reuse the equations in another place, say for example an associated presentations
-            % \ExecuteMetaData[\importPath/equations.tex]{lorenzAttr}
 
-        % \ExecuteMetaData[\importPath/assets.tex]{tikzLorenz}
-        So this is cool right, even the gls code is applied and you can have your axis labels be the symbols you defined earlier. Portability rules.
-        But remember our little gif that was created from the video? Well thats not a function of beamer but instead a function of pdfs. So lets bring it all together and use our lua code, with tikz, to create an animation of the process of the attractors being formed.
-        % \ExecuteMetaData[\importPath/assets.tex]{lorenzAnimate}
-        Finally, how about game of life?
-        % \ExecuteMetaData[\importPath/assets.tex]{golAnimate}
+            \ExecuteMetaData[\importPath/equations.tex]{nucEnerReleased}
+            \ExecuteMetaData[\importPath/equations.tex]{pairEnParam}
+            \ExecuteMetaData[\importPath/equations.tex]{nucBinEner}
+
+            \ExecuteMetaData[\importPath/assets.tex]{targsAndVals}
+            \ExecuteMetaData[\importPath/assets.tex]{tikzCircuitDCDC}
+            % \ExecuteMetaData[\importPath/assets.tex]{tikzDiag}
+            \ExecuteMetaData[\importPath/assets.tex]{pnjunction}
+            \ExecuteMetaData[\importPath/assets.tex]{mosfettikz}
+
+            So this is cool right, even the gls code is applied and you can have your axis labels be the symbols you defined earlier. Portability rules.
+            But remember our little gif that was created from the video? Well thats not a function of beamer but instead a function of pdfs. So lets bring it all together and use our lua code, with tikz, to create an animation of the process of the attractors being formed.
+
+            \ExecuteMetaData[\importPath/assets.tex]{tikzLorenz}
+            \ExecuteMetaData[\importPath/equations.tex]{lorenzAttr}
 
     \clearpage
     \standaloneBib

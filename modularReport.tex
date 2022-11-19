@@ -4,9 +4,10 @@
 % arara: lualatex: { shell: true, interaction: nonstopmode }
 % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
 
-\providecommand{\sharedPath}{./Shared}
-\providecommand{\assetPath}{./Assets}
-\providecommand{\importPath}{\sharedPath/Imports}
+\providecommand{\toplevel}{.}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
 
 \documentclass[hidelinks]{article}
 

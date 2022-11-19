@@ -1,0 +1,29 @@
+% arara: lualatex: { shell: true}
+% arara: lualatex: { shell: true}
+
+\providecommand{\toplevel}{../../../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+\documentclass[tikz, hidelinks, float=false, crop=true]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+    \begin{tikzpicture}
+        \draw[->] (0,0)--(0,6.5)node[left]{\gls{ener}};
+        \draw[->] (0,0)--(5.5,0)node[right]{\gls{fermiDist}};
+        \draw[dashed] (2.5,0)node[below]{$\sfrac{1}{2}$}--(2.5,3);
+        \draw[dashed] (0,3)node[left]{\gls{efermi}}--(2.5,3);
+        \draw (0.05,6)--(0.05,4.5);
+        \draw (0.05,4.5) to [out=270, in=90] (5,1.5);
+        \draw (5,1.5)--(5,0)node[below]{$1$};
+        \draw (0.05,6)--(0.05,5.5);
+        \draw (0.05,5.5) to [out=270, in=90] (5, 0.5);
+        \draw (5,0.5)--(5,0);
+        \draw[->] (0.3,3.3)--(2,4.5)node[right]{$\gls{temp}_{increasing}$};
+    \end{tikzpicture}
+\end{document}
