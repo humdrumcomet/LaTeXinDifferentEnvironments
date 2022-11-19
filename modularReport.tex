@@ -1,0 +1,48 @@
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: makeglossaries
+% arara: biber
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+
+\providecommand{\sharedPath}{./Shared}
+\providecommand{\assetPath}{./Assets}
+\providecommand{\importPath}{\sharedPath/Imports}
+
+\documentclass[hidelinks]{article}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+\setboolean{standaloneFlag}{true}
+
+\begin{document}
+    \begin{center}
+        \vspace*{1cm}
+        {\fontsize{30}{50}\selectfont {\bfseries \LaTeX~in Different Environments\\}}
+        \vspace{3cm}
+        {\LARGE Modularizing your Documents\\
+            and Working in Different IDEs\\}
+        \vspace{7.5cm}
+    \end{center}
+    \begin{flushright}
+        Authors and Organizers:\\
+        Ghassan Arnouk\\
+        Alec Bales D'Cruze\\
+        Aaron English\\
+        \DTMusedate{presentation}\\
+    \end{flushright}
+    \thispagestyle{empty}
+
+
+    \clearpage
+    \tableofcontents
+    \clearpage
+
+    \import{./ReportChapters/001-ch1/}{chapt1.tex}
+    \import{./ReportChapters/002-ch2/}{chapt2.tex}
+
+    \clearpage
+    \printglossaries
+    \clearpage
+    \printbibliography
+\end{document}

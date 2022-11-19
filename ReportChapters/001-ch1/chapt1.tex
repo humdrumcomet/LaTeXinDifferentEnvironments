@@ -1,0 +1,58 @@
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: makeglossaries
+% arara: biber
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+
+\providecommand{\sharedPath}{../../Shared}
+\providecommand{\assetPath}{../../Assets}
+\providecommand{\importPath}{\sharedPath/Imports}
+
+\documentclass[hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}{}
+    \section{Introduction}
+        \subsection{Tikz}
+            \subsubsection{Vector Graphics Vs Raster Graphics}
+                A good thing to understand is the difference between a raster graphic or a vector graphic. Ever notice how when you zoom in on a pdf the letters don't start to pixelize? or in an image as you zoom in all you're doing is making the pixels bigger? well this is the difference beteen vectos and raster. That means that if you want nice plots that let you resize as needed, getting them as a vector graphics is a must. Handily enough latex has a very powerful and popular packages called Tikz that lets you create vector images withing latex. Doing this requires you to have a mental image of the end product, but getting used to this will be extremely helpful.
+
+                Of the many great aspects to tikz, one of my favourites is the consistency of font, and the ability to even include those symbols as discussed previously.
+
+                \ExecuteMetaData[\importPath/assets.tex]{tikzDiag}
+
+                Maybe you'd like to plot some data in a csv file?
+                \ExecuteMetaData[\importPath/assets.tex]{tikzplot}
+
+        \subsection{standalone}
+            For simplification, you can have your tikz pictures in separate files for easy compilation and verification of the tikz picture.
+
+    \section{input Command}
+        \begin{itemize}
+            \item Reusing your preambles (without copying and pasting)
+            \item Reusing glossaries
+        \end{itemize}
+    \section{Import Package}
+    \section{Standalone Package}
+        \begin{itemize}
+            \item Breaking your document into mular parts
+            \item TikZ Images
+        \end{itemize}
+    \section{catchfilebetweentags Package}
+        \subsection{catchfilebetweentags}
+            This handy package allows you to store a bunch of different things (say for example, equations) and pull them in to your document. This is really nice because it makes your document's code more easily read. It also makes it that you can reuse the equations in another place, say for example an associated presentations
+            % \ExecuteMetaData[\importPath/equations.tex]{lorenzAttr}
+
+        % \ExecuteMetaData[\importPath/assets.tex]{tikzLorenz}
+        So this is cool right, even the gls code is applied and you can have your axis labels be the symbols you defined earlier. Portability rules.
+        But remember our little gif that was created from the video? Well thats not a function of beamer but instead a function of pdfs. So lets bring it all together and use our lua code, with tikz, to create an animation of the process of the attractors being formed.
+        % \ExecuteMetaData[\importPath/assets.tex]{lorenzAnimate}
+        Finally, how about game of life?
+        % \ExecuteMetaData[\importPath/assets.tex]{golAnimate}
+
+    \clearpage
+    \standaloneBib
+\end{document}

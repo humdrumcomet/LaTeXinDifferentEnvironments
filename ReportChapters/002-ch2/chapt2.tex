@@ -1,0 +1,114 @@
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: makeglossaries
+% arara: biber
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+
+\providecommand{\sharedPath}{../../Shared}
+\providecommand{\assetPath}{../../Assets}
+\providecommand{\importPath}{\sharedPath/Imports}
+
+\documentclass[hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+    \section{The \LaTeX~Family Tree}
+    \section{Processing \TeX~Files}
+        \subsection{Manually Processing Files}
+            Processing a \TeX~file typically just means running the right programs in a certain order.
+            Because of the sizing, number, and ordering work \LaTeX~is doing during the compilation, it needs to be run at least twice.
+            Typically if our document includes a bibliography (and other elements like glossaries or indices), the compilation procedure would mean executing each of the commands shown in Listing \ref{lst:compilation}.
+            \begin{listing}[H]
+                \begin{centering}
+                    \begin{minted}{bash}
+                        pdflatex --shell-escape --interaction=nonstopmode report
+                        biber report
+                        makeglossaries report
+                        pdflatex --shell-escape --interaction=nonstopmode report
+                        pdflatex --shell-escape --interaction=nonstopmode report
+                    \end{minted}
+                    \caption{Shell commands needed to compile a report directly}
+                    \label{lst:compilation}
+                \end{centering}
+            \end{listing}
+            A neat detail of these commands is that they can accept any \LaTeX~commands.
+            This gives the possibility of changing variables in a document during the execution (see Listing \ref{lst:compilationwithcommands}).
+            \begin{listing}[H]
+                \begin{centering}
+                    \begin{minted}{bash}
+                        lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft}\\input{report}"
+                        biber report
+                        makeglossaries report
+                        lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft}\\input{report}"
+                        lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{final}\\input{report}"
+                    \end{minted}
+                    \caption{Shell commands compiling a document with addition commands provided at compile time}
+                    \label{lst:compilationwithcommands}
+                \end{centering}
+            \end{listing}
+
+        \subsection{latexmk}
+            latexmk is a tool that tries to automate the latex compilation process by reading in the log files and figuring out what additional programs need to be run, and when to rerun the compilation.
+            It is a very effective tool and in most cases the defacto \LaTeX~compiler.
+            \begin{listing}[H]
+                \begin{centering}
+                    \begin{minted}{bash}
+                        latexmk -pdf report.tex
+                    \end{minted}
+                    \caption{Shell command for compiling with latexmk}
+                    \label{lst:compilationwithcommands}
+                \end{centering}
+            \end{listing}
+
+        \subsection{arara}
+            Sometimes however, latexmk doesn't know of some additional tool or new intermediate program that needs to be run, and this can create issues.
+            It is also at times trying to be too smart, and ends up creating issues.
+            For these reasons my go-to for a number of years has been ARARA, a compilation tool that allows you to define the compilation process at the beginning of your document.
+            Listing \ref{lst:araradirectives} shows the directive syntax for arara, with Listing \ref{lst:araracompilation} showing the actual command.
+            \begin{listing}[H]
+                \begin{centering}
+                    \begin{minted}{latex}
+                        % arara: lualatex: { shell: true, interaction: nonstopmode }
+                        % arara: makeglossaries
+                        % arara: biber
+                        % arara: lualatex: { shell: true, interaction: nonstopmode }
+                        % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+                    \end{minted}
+                    \caption{Shell command for compiling with Arara}
+                    \label{lst:araracompilation}
+                \end{centering}
+            \end{listing}
+            \begin{listing}[H]
+                \begin{centering}
+                    \begin{minted}{bash}
+                        arara -v report.tex
+                    \end{minted}
+                    \caption{Shell command for compiling with Arara}
+                    \label{lst:araracompilation}
+                \end{centering}
+            \end{listing}
+
+    \section{\TeX~Distributions}
+        \TeX~and \LaTeX~is a very large collection of programs and files, and installing them each individually would be a huge hassle.
+        Thankfully the programs and packages are available bundled together as a single distribution.
+        The distribution of choice where possible is TeXLive.
+        On Linux systems it is always available in the systems package manager.
+        For Mac and Windows systems, there are a few different options because sometimes it can be challenging to get TeXLive to operate (though I have no personal experience with these).
+        \subsection{Mac}
+            \begin{itemize}
+                \item TeXLive
+                \item MacTeX
+            \end{itemize}
+        \subsection{Windows}
+            \begin{itemize}
+                \item TeXLive
+                \item MiKTeX
+                \item ProTeXt
+            \end{itemize}
+
+    \clearpage
+    \standaloneBib
+\end{document}
