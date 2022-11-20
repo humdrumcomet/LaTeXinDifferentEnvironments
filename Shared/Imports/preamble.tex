@@ -53,6 +53,23 @@
 % A command for less cramped nested fractions
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
 
+% Front matter, main matter, and back matter definitions
+\def\frontmatter{%
+ \pagenumbering{roman}
+ \setcounter{page}{1}
+ \renewcommand{\thesection}{\roman{section}}
+}%
+\def\mainmatter{%
+ \pagenumbering{arabic}
+ \setcounter{page}{1}
+ \setcounter{section}{0}
+ \renewcommand{\thesection}{\arabic{section}}
+}%
+\def\backmatter{%
+ \setcounter{section}{0}
+ \renewcommand{\thesection}{\alph{section}}
+}%
+
 %Get rounded wire jumps
 \tikzset{
     declare function={% in case of CVS which switches the arguments of atan2

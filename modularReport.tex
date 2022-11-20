@@ -35,18 +35,20 @@
     \end{flushright}
     \thispagestyle{empty}
 
-
+    \frontmatter
     \clearpage
     \tableofcontents
     \clearpage
     \listoffigures
     \clearpage
-    \printglossary[type=main]
+    \listoftables
     \clearpage
 
+    \mainmatter
     \import{./ReportChapters/001-ch1/}{chapt1.tex}
     \import{./ReportChapters/002-ch2/}{chapt2.tex}
 
+    \backmatter
     \clearpage
     \printglossaries
     \clearpage
