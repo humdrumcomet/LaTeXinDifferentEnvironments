@@ -1,0 +1,84 @@
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: makeglossaries
+% arara: biber
+% arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+
+\providecommand{\toplevel}{..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+% Demo report and presentation prepared by Aaron English (humdrumcomet on github)
+\documentclass{beamer}
+
+\usetheme[progressbar=frametitle, numbering=fraction]{metropolis}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\title{Hello Beamer!}
+\subtitle{\LaTeX in Different Environments}
+\author{Ghassan Arnouk \and
+            Alec Bales D'Cruze \and
+            Aaron English}
+\date{\DTMusedate{presentation}}
+
+\begin{document}
+    \begin{frame}
+        \titlepage
+    \end{frame}
+    \begin{frame}[noframenumbering, plain]
+        \frametitle{Contents}
+        \tableofcontents
+    \end{frame}
+    \section{Demos}
+        \begin{frame}
+            \frametitle{Even Revealing Lists and Images}
+            \begin{overlayarea}{\textwidth}{\textheight}
+                \only<1>{\ExecuteMetaData[\importPath/assets.tex]{targsAndVals}}%
+                \only<2>{\ExecuteMetaData[\importPath/assets.tex]{tikzCircuitDCDC}}%
+            \end{overlayarea}
+        \end{frame}
+    \section{Equations}
+        \begin{frame}
+            \frametitle{A Couple of Equations}
+            \ExecuteMetaData[\importPath/equations.tex]{lorenzAttr}
+        \end{frame}
+        \begin{frame}
+            \frametitle{TikZ Plots}
+            \ExecuteMetaData[\importPath/assets.tex]{tikzLorenz}
+        \end{frame}
+    \section{TikZ}
+        \begin{frame}
+            \frametitle{TikZ Graphics}
+            \ExecuteMetaData[\importPath/assets.tex]{pnjunction}
+        \end{frame}
+        \begin{frame}
+            \frametitle{More Graphics}
+            \ExecuteMetaData[\importPath/assets.tex]{mosfettikz}
+          \end{frame}
+    \section{Backmatter}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Bibliography}
+            \printbibliography
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Acronyms}
+            \printglossary[type=\acronymtype]
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Glossary}
+            \printglossary[type=main]
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Constants}
+            \printglossary[type=constants, nonumberlist, nopostdot]
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Symbols}
+            \printglossary[type=symbols]
+        \end{frame}
+
+\end{document}
