@@ -1,0 +1,39 @@
+% arara: lualatex: { shell: true}
+% arara: lualatex: { shell: true}
+
+\providecommand{\toplevel}{../../../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+\documentclass[tikz, hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+        \begin{tikzpicture}[->, -latex, auto, node distance=90]
+                \node[state](1) {\hologo{TeX}};
+                \node[state](2)[below left of=1] {\hologo{LaTeX}};
+                \node[state](3)[left of=2] {\hologo{XeTeX}};
+                \node[state](4)[below right of=1] {\hologo{pdfTeX}};
+                \node[state](5)[right of=4] {\hologo{LuaTeX}};
+                \node[state](6)[below of=3] {\hologo{XeLaTeX}};
+                \node[state](7)[below of=2] {\hologo{pdfLaTeX}};
+                \node[state](8)[below of=4] {\hologo{LuaLaTeX}};
+                \node[state](9)[below of=5] {\hologo{ConTeXt}};
+                \path (1) edge (2)
+                      (1) edge (3)
+                      (1) edge (4)
+                      (1) edge (5)
+                      (2) edge (6)
+                      (3) edge (6)
+                      (2) edge (7)
+                      (4) edge (7)
+                      (2) edge (8)
+                      (5) edge (8)
+                      (5) edge (9);
+
+\end{tikzpicture}
+\end{document}
