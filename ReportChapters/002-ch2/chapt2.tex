@@ -2,7 +2,7 @@
 % arara: makeglossaries
 % arara: biber
 % arara: lualatex: { shell: true, interaction: nonstopmode }
-% arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+% arara: lualatex: { shell: true, interaction: nonstopmode }
 
 \providecommand{\toplevel}{../..}
 \providecommand{\importPath}{\toplevel/Shared/Imports}
@@ -29,7 +29,7 @@
             Processing a \TeX~file typically just means running the right programs in a certain order.
             Because of the sizing, number, and ordering work \LaTeX~is doing during the compilation, it needs to be run at least twice.
             Typically if our document includes a bibliography (and other elements like glossaries or indices), the compilation procedure would mean executing each of the commands shown in Listing \ref{lst:compilation}.
-            \begin{listing}[H]
+            \begin{listing}[htbp]
                 \begin{centering}
                     \begin{minted}{bash}
                         pdflatex --shell-escape --interaction=nonstopmode report
@@ -44,7 +44,7 @@
             \end{listing}
             A neat detail of these commands is that they can accept any \LaTeX~commands.
             This gives the possibility of changing variables in a document during the execution (see Listing \ref{lst:compilationwithcommands}).
-            \begin{listing}[H]
+            \begin{listing}[htbp]
                 \begin{centering}
                     \begin{minted}{bash}
                         lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft}\\input{report}"
@@ -61,13 +61,13 @@
         \subsection{latexmk}
             latexmk is a tool that tries to automate the latex compilation process by reading in the log files and figuring out what additional programs need to be run, and when to rerun the compilation.
             It is a very effective tool and in most cases the defacto \LaTeX~compiler.
-            \begin{listing}[H]
+            \begin{listing}[htbp]
                 \begin{centering}
                     \begin{minted}{bash}
                         latexmk -pdf report.tex
                     \end{minted}
                     \caption{Shell command for compiling with latexmk}
-                    \label{lst:compilationwithcommands}
+                    \label{lst:latexmkcommands}
                 \end{centering}
             \end{listing}
 
@@ -86,7 +86,7 @@
                         % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
                     \end{minted}
                     \caption{Shell command for compiling with Arara}
-                    \label{lst:araracompilation}
+                    \label{lst:araradirectives}
                 \end{centering}
             \end{listing}
             \begin{listing}[H]
