@@ -17,50 +17,81 @@
 
 \begin{document}{}
     \section{Introduction}
-        \subsection{Tikz}
-            \subsubsection{Vector Graphics Vs Raster Graphics}
-                A \gls{cwvm} is a useful device.
-                The second time though, the \gls{cwvm} is just more of the same.
+        A running theme through many of these presentation has been the idea of reuseable code.
+        The idea being that once you code something up in a way that you like, say for example your preamble, you can reuse it the next time you're writing a report.
+        But this is code, so we want to simplify this as much as possible.
+        In fact, we don't ever want to copy and paste, we want it to be set up so that if something goes wrong and we fix some issue that fix propagates out everywhere.
+        So how do we do that?
+        \LaTeX~has a variety of commands and packages that facilitate this sort of thing at different levels as we explore these, keep in mind a couple of different ideas:
+        \begin{itemize}
+            \item Reusing material from your report in your presentation
+            \item Modularizing documents; especially big documents
+            \item Reusing general code
+        \end{itemize}
+    \section{\LaTeX~Macro Expansion}
+    \section{A (very) Brief Pathing Primer}
+        When setting up a modular document, often times its desireable to have it use relative paths \mintinline{bash}{../../your-file.tex} instead of absolute ones \mintinline{bash}{/home/your-user-name/your/path/to/file.tex}.
+        Figure \ref{fig:directoryStructure} shows a sample of the directory for this report.
+        \ExecuteMetaData[\importPath/assets.tex]{directoryStructure}
+    \section{Handling Paths Yourself}
+        My preferred solution to the pathing issue is to define some variables and simply define the relative distance to the top level in each file independently.
+        This way, no matter which file or subfile I'm using, the correct path is being followed, and only one variable needs to be set for a file.
+        \begin{listing}[H]
+            \begin{centering}
+                \begin{minted}{latex}
+                    \providecommand{\toplevel}{../..}
+                    \providecommand{\importPath}{\toplevel/Shared/Imports}
+                    \providecommand{\assetPath}{\toplevel/Assets}
+                    \providecommand{\sharedPath}{\toplevel/Shared}
 
-                A good thing to understand is the difference between a raster graphic or a vector graphic. Ever notice how when you zoom in on a pdf the letters don't start to pixelize? or in an image as you zoom in all you're doing is making the pixels bigger? well this is the difference beteen vectos and raster. That means that if you want nice plots that let you resize as needed, getting them as a vector graphics is a must. Handily enough latex has a very powerful and popular packages called Tikz that lets you create vector images withing latex. Doing this requires you to have a mental image of the end product, but getting used to this will be extremely helpful.
+                    \documentclass[hidelinks, float=false, crop=false]{standalone}
 
-                Of the many great aspects to tikz, one of my favourites is the consistency of font, and the ability to even include those symbols as discussed previously.
-
-
-                Maybe you'd like to plot some data in a csv file?
-
-        \subsection{standalone}
-            For simplification, you can have your tikz pictures in separate files for easy compilation and verification of the tikz picture.
+                    \input{\importPath/preamble}
+                    \input{\importPath/glossary}
+                    \input{\importPath/symbols}
+                \end{minted}
+                \caption{Manually solving the pathing issue}
+                \label{lst:bibliography}
+            \end{centering}
+        \end{listing}
 
     \section{input Command}
+        \mintinline{latex}{\input{you-file.tex}} is the basic form of importing. Requires no external packages, but also doesn't do anything fancy.
+        Grabs the file and drops it in-place.
         \begin{itemize}
             \item Reusing your preambles (without copying and pasting)
             \item Reusing glossaries
         \end{itemize}
-    \section{Import Package}
-    \section{Standalone Package}
+    \section{import Package}
+        Can aid with pathing, because it separated out the file from its path and so can find files imported from subimports following their source directory.
+    \section{standalone Package}
+        The major limitation of the import and input commands is that if they're being use with files you'd like to compile separately (for testing, or for any other reason) having multiple preambles will create break your files.
+        The standalone package is a sophisticated tool that solves this by (optionally) ignoring the preambles of any files you're pulling in (or by combining preambles).
+        This brings us closer to our modularized document because it means TiKz figures can be written separately, compiled, tested and all the rest without having to compile your entire document every time.
+        As an added bonus, it introduces the \mintinline{latex}{\includestandalone[\width=0.5\textwidth]{your-tikz-image}} which as shown, allows you to scale TiKz figures as though the were regular images.
+        Very handy.
+        It also allows you to break your report into multiple chapters.
         \begin{itemize}
-            \item Breaking your document into mular parts
+            \item Breaking your document into modular parts
             \item TikZ Images
         \end{itemize}
     \section{catchfilebetweentags Package}
         \subsection{catchfilebetweentags}
-            This handy package allows you to store a bunch of different things (say for example, equations) and pull them in to your document. This is really nice because it makes your document's code more easily read. It also makes it that you can reuse the equations in another place, say for example an associated presentations
+            This handy package allows you to store a bunch of different things (say for example, equations) and pull them in to your document. This is really nice because it makes your document's code more easily read. It also makes it that you can reuse the equations in another place, say for example an associated presentations.
 
+            You can use it for anything from equations,
             \ExecuteMetaData[\importPath/equations.tex]{nucEnerReleased}
             \ExecuteMetaData[\importPath/equations.tex]{pairEnParam}
             \ExecuteMetaData[\importPath/equations.tex]{nucBinEner}
-
+            to tables,
             \ExecuteMetaData[\importPath/assets.tex]{targsAndVals}
+            to figures.
             \ExecuteMetaData[\importPath/assets.tex]{tikzCircuitDCDC}
             \ExecuteMetaData[\importPath/assets.tex]{pnjunction}
             \ExecuteMetaData[\importPath/assets.tex]{mosfettikz}
-
-            So this is cool right, even the gls code is applied and you can have your axis labels be the symbols you defined earlier. Portability rules.
-            But remember our little gif that was created from the video? Well thats not a function of beamer but instead a function of pdfs. So lets bring it all together and use our lua code, with tikz, to create an animation of the process of the attractors being formed.
-
             \ExecuteMetaData[\importPath/assets.tex]{tikzLorenz}
             \ExecuteMetaData[\importPath/equations.tex]{lorenzAttr}
+            Handy!
 
     \clearpage
     \standaloneBib

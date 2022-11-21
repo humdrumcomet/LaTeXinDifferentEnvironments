@@ -17,12 +17,21 @@
 
 \begin{document}
     \section{The \LaTeX~Family Tree}
+        The \TeX~family tree is a large one. You will often see many of these terms thrown around and it can be difficult to make sense of it.
+        The tree shown in Figure \ref{fig:texfamilytree} shows how each of the major active \TeX~siblings relate.
         \ExecuteMetaData[\importPath/assets.tex]{texfamilytree}
         \subsection{\TeX}
+            \TeX~is the original typsetting tool create by Donald Knuth in the 1980s.
         \subsection{\Hologo{pdfTeX}}
+            \Hologo{pdfTeX} is an extension to the original \TeX~that enables the creation of PDF files.
         \subsection{\LaTeX}
-        \subsection{\Hologo{LuaTeX}}
+            As mention \TeX~primitive are the real way of interacting with the \TeX~engine, but they are challenging to work with.
+            \LaTeX~is a collection of macros that ease the use \TeX~and facilitate writing new packages.
         \subsection{\Hologo{XeTeX}}
+            \Hologo{XeTeX} is a development on \TeX~that extends support for languages and glyphs beyond those using just the roman alphabet.
+        \subsection{\Hologo{LuaTeX}}
+            \Hologo{LuaTeX} is a recent and ongoing development which exposes the \TeX~primitives via the small and fast scripting language Lua.
+            This has many benefits but can be effectively summarized as making it easier to code in \TeX.
 
     \section{Processing \TeX~Files}
         \subsection{Manually Processing Files}
