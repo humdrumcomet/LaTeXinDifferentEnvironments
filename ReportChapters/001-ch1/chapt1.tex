@@ -75,6 +75,33 @@
             \item Breaking your document into modular parts
             \item TikZ Images
         \end{itemize}
+        \subsection{A Useful Additional Command}
+            When working with a modularized document, it is often desireable to compile it with glossaries or bibliographies added at the end.
+            Of course you can't just add the commands \mintinline{latex}{\printbibliography} because then you would have duplicate bibliographies printed in the super file.
+            My preferred approach to solving this is through the use of boolean flags.
+            Listing \ref{lst:conditionalBibsForSubFiles}, gives the code to be added to the preamble that creates a command to conditionally input a bibliography if the boolean flag \mintinline{latex}{standaloneFlag} is set to \mintinline{latex}{true}.
+            \begin{listing}[H]
+                \begin{centering}
+                    \begin{minted}{latex}
+                        % For using the standalone package
+                        \newboolean{standaloneFlag}
+                        \setboolean{standaloneFlag}{true}
+                        % Command to conditionally typeset a bibliography.
+                        \newcommand{\standaloneBib}{%%
+                        \ifthenelse{\boolean{standaloneFlag}}%%
+                        {\printbibliography[heading=bibintoc]
+                                \printglossary[type=symbols]
+                                \printglossary[type=acronymtype]
+                        \printglossary[type=main]}{}}
+                    \end{minted}
+                    \caption{Conditionally typeset bibliography and glossaries}
+                    \label{lst:conditionalBibsForSubFiles}
+                \end{centering}
+            \end{listing}
+            In the subfiles, now you can issue the command \mintinline{latex}{\standaloneBib} to have the bibliography and glossaries printed if you in the subfile.
+            In the super file then, issue the command \mintinline{latex}{\setboolean{standaloneFlag}{false}} after loading the preamble, to have all instances of \mintinline{latex}{standaloneBib} blocked, and then use the normal commands to have the bibliography and glossaries typset where you want them.
+
+
     \section{catchfilebetweentags Package}
         \subsection{catchfilebetweentags}
             This handy package allows you to store a bunch of different things (say for example, equations) and pull them in to your document. This is really nice because it makes your document's code more easily read. It also makes it that you can reuse the equations in another place, say for example an associated presentations.
