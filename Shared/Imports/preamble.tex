@@ -1,7 +1,9 @@
-\usepackage{import} % needed for importing with path consideration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% LOAD PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{geometry} % useful for defining page geometries
 \usepackage{hyperref} % used for creating hyperlinks in documents. Both to the web and within the document itself
-\usepackage[mode=build, subpreambles=false]{standalone}
+\usepackage[mode=build, subpreambles=false]{standalone} % for using the standalone package for import
 \makeatletter
 \@ifclassloaded{beamer}{
   \typeout{
@@ -24,37 +26,71 @@
   \usepackage{amssymb} % more mathematical symbols
 }
 \makeatother
-% Not needed with lualatex
+% These packages aren't needed when compiling under LuaLaTeX
 % \usepackage[utf8]{inputenc} % how to treat the written file (as utf8)
-% \usepackage{morewrites} % important because with the glossaries, and beamers own files it is writing out, latex can use up its own hardcoded limit
-\usepackage[T1]{fontenc} % the encoding for the output file T1 is the most common, includes accents and many other commonly needed/used characters
-\usepackage{hologo}
+% \usepackage{morewrites} % important because with the glossaries, latex can use up its own hardcoded limit of files it can write out
+% \usepackage[T1]{fontenc} % the encoding for the output file T1 is the most common, includes accents and many other commonly needed/used characters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[style=ieee,backend=biber]{biblatex} % for handling bibliographies
 \usepackage{float} % added control over
 \usepackage{graphicx} % tools for inclusion of graphics
 \usepackage{booktabs} % adding commands to improve the look of tables
 \usepackage{csvsimple} % simplify table creation by importing .csv files directly
 \usepackage{siunitx} % consistent notation and correct formatting of units
-\DeclareSIUnit{\torr}{Torr} % Custom unit definition
 \usepackage{minted} % inclusion of code blocks with syntax highlighting and
-\setminted{linenos, autogobble, fontsize=\footnotesize, breaklines=true} % set global options for minted environments
+\usepackage{xcolor} % to access the named colour LightGray
 \usepackage{chemformula} % for writing chemical formulae
-\usepackage[useregional]{datetime2}
+\usepackage[useregional]{datetime2} % facilitate date and time typesetting
 \usepackage{catchfilebetweentags} % taking elements from between tags
-
 \usepackage[debug, toc, section=section, acronym, symbols]{glossaries} % Glossaries package
-\usepackage{tikz}
-    \usetikzlibrary{math, arrows, circuits.ee.IEC, positioning, shapes.arrows, shapes.geometric, automata}
-\usepackage{pgfplots}
-    \pgfplotsset{compat=newest, compat/show suggested version=false}
-    \usepgfplotslibrary{groupplots}
-\usepackage[siunitx,american voltages, american currents, RPvoltages]{circuitikz}
-\usepackage{forest}
+\usepackage{tikz} % to produce tikz vector graphics images in your document
+\usepackage{pgfplots} % to produce tikz/pgf vector graphic plots within your document
+\usepackage[siunitx,american voltages, american currents, RPvoltages]{circuitikz} % circuits with tikz
+\usepackage{hologo}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% PACKAGE SETUP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% minted
+\definecolor{LightGray}{gray}{0.9}
+\setminted{linenos=false, autogobble, fontsize=\small, breaklines=true, bgcolor=LightGray} % global default options for minted
+\setmintedinline{bgcolor={}} % global default options for inline minted
+
+% tikz
+\usetikzlibrary{math, arrows, circuits.ee.IEC, positioning, shapes.arrows, shapes.geometric, automata}
+
+% pgfplots
+\pgfplotsset{compat=newest, compat/show suggested version=false}
+\usepgfplotslibrary{groupplots}
+
+% siunitx
+\sisetup{
+detect-family = true,
+detect-weight = true,
+per-mode = reciprocal,
+input-digits = { 0123456789\pi\dots },
+input-comparators = { <=>\approx\ge\geq\gg\le\leq\ll\sim\gtrsim\lesssim },
+table-auto-round,
+table-align-comparator = true,
+}%
+\DeclareSIUnit{\torr}{Torr} % Custom unit definition
+
+% Bibliography .bib file location
+\addbibresource[location=local]{\bibPath/references.bib}
+
+% Add Constants list using glossary
+\newglossary[cgls]{constants}{cstog}{cstig}{Constants}
+
+% Alphabetize glossary and acronyms list
+\makeglossaries
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% ADDITIONAL SETUP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A command for less cramped nested fractions
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
 
-% Front matter, main matter, and back matter definitions
+% Front matter, main matter, and back matter definitions (not needed for document class book or memoire)
 \def\frontmatter{%
  \pagenumbering{roman}
  \setcounter{page}{1}
@@ -90,33 +126,17 @@
           -- (\tikztotarget)}}
       }
 
-% SI unit pkg conf
-\sisetup{
-    load-configurations = abbreviations,
-    detect-family = true,
-    per-mode = reciprocal
-}%
-\DeclareSIUnit{\torr}{Torr}
 
-% Bibliography .bib file locations should maybe be local?
-\addbibresource[location=local]{./accelerators.bib}
-
-% For using the standalone package
+% For using the standalone package and conditionally typesetting bibliography and glossaries
 \newboolean{standaloneFlag}
 \setboolean{standaloneFlag}{true}
-% Add Constants list using glossary
-\newglossary[cgls]{constants}{cstog}{cstig}{Constants}
-
-% Alphabetize glossary and acronyms list
-\makeglossaries
-
-
-% Command to conditionally typeset a bibliography.
+% Create command to conditionally typeset a bibliography.
 \newcommand{\standaloneBib}{%%
-  \ifthenelse{\boolean{standaloneFlag}}%%
-  {\printbibliography[heading=bibintoc]
-        \printglossary[type=symbols]
-        \printglossary[type=acronymtype]
-  \printglossary[type=main]}{}}
-
-\DTMsavedate{presentation}{2022-11-19}
+  \ifthenelse{\boolean{standaloneFlag}}{
+    \clearpage
+    \printbibliography[heading=bibintoc]
+    \printglossary[type=symbols]
+    \printglossary[type=constants]
+    \printglossary[type=acronymtype]
+    \printglossary[type=main]
+  }{}}

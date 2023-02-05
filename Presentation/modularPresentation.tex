@@ -5,9 +5,10 @@
 % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
 
 \providecommand{\toplevel}{..}
-\providecommand{\importPath}{\toplevel/Shared/Imports}
-\providecommand{\assetPath}{\toplevel/Assets}
 \providecommand{\sharedPath}{\toplevel/Shared}
+\providecommand{\importPath}{\sharedPath/Imports}
+\providecommand{\bibPath}{\sharedPath/bibFiles}
+\providecommand{\assetPath}{\toplevel/Assets}
 
 % Demo report and presentation prepared by Aaron English (humdrumcomet on github)
 \documentclass{beamer}
@@ -17,13 +18,13 @@
 \input{\importPath/preamble}
 \input{\importPath/glossary}
 \input{\importPath/symbols}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
 \title{Hello Beamer!}
 \subtitle{\LaTeX~in Different Environments}
 \author{Ghassan Arnouk \and
             Alec Bales D'Cruze \and
             Aaron English}
-\date{\DTMusedate{presentation}}
 
 \begin{document}
     \begin{frame}
@@ -33,52 +34,142 @@
         \frametitle{Contents}
         \tableofcontents
     \end{frame}
-    \section{Demos}
+    \section{The \TeX~Family Tree}
         \begin{frame}
-            \frametitle{Even Revealing Lists and Images}
-            \begin{overlayarea}{\textwidth}{\textheight}
-                \only<1>{\ExecuteMetaData[\importPath/assets.tex]{targsAndVals}}%
-                \only<2>{\ExecuteMetaData[\importPath/assets.tex]{tikzCircuitDCDC}}%
-            \end{overlayarea}
-        \end{frame}
-    \section{Equations}
-        \begin{frame}
-            \frametitle{A Couple of Equations}
-            \ExecuteMetaData[\importPath/equations.tex]{lorenzAttr}
+            \frametitle{The Most Common Members}
+            \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}
         \end{frame}
         \begin{frame}
-            \frametitle{TikZ Plots}
-            \ExecuteMetaData[\importPath/assets.tex]{tikzLorenz}
-        \end{frame}
-    \section{TikZ}
-        \begin{frame}
-            \frametitle{TikZ Graphics}
-            \ExecuteMetaData[\importPath/assets.tex]{pnjunction}
+            \frametitle{\Hologo{TeX}}
         \end{frame}
         \begin{frame}
-            \frametitle{More Graphics}
-            \ExecuteMetaData[\importPath/assets.tex]{mosfettikz}
-          \end{frame}
-    \section{Backmatter}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Bibliography}
-            \printbibliography
+            \frametitle{\Hologo{LaTeX}}
         \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Acronyms}
-            \printglossary[type=\acronymtype]
+        \begin{frame}
+            \frametitle{\Hologo{pdfTeX}}
         \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Glossary}
-            \printglossary[type=main]
+        \begin{frame}
+            \frametitle{\Hologo{XeTeX}}
         \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Constants}
-            \printglossary[type=constants, nonumberlist, nopostdot]
+        \begin{frame}
+            \frametitle{\Hologo{LuaTeX}}
         \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Symbols}
-            \printglossary[type=symbols]
+    \section{Processing \TeX~Files}
+        \begin{frame}[fragile]
+            \frametitle{Manually in Shell/Bash/Etc.}
+            \begin{centering}
+                \begin{minted}{bash}
+                    pdflatex --shell-escape --interaction=nonstopmode report
+                    biber report
+                    makeglossaries report
+                    pdflatex --shell-escape --interaction=nonstopmode report
+                    pdflatex --shell-escape --interaction=nonstopmode report
+                \end{minted}
+            \end{centering}
         \end{frame}
+        \begin{frame}[fragile]
+            \frametitle{Passing Commands at Compile Time}
+            \begin{centering}
+                \begin{minted}{bash}
+                    lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft} \\input{report}"
+                    biber report
+                    makeglossaries report
+                    lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft} \\input{report}"
+                    lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{final} \\input{report}"
+                \end{minted}
+            \end{centering}
+        \end{frame}
+        \begin{frame}[fragile]
+            \frametitle{latexmk}
+            \begin{centering}
+                \begin{minted}{bash}
+                    latexmk -pdf report.tex
+                \end{minted}
+            \end{centering}
+        \end{frame}
+        \begin{frame}[fragile]
+            \frametitle{ARARA}
+            \begin{centering}
+                \begin{minted}{latex}
+                    % arara: lualatex: { shell: true, interaction: nonstopmode }
+                    % arara: makeglossaries
+                    % arara: biber
+                    % arara: lualatex: { shell: true, interaction: nonstopmode }
+                    % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+                \end{minted}
+                \begin{minted}{bash}
+                    arara -v report.tex
+                \end{minted}
+            \end{centering}
+        \end{frame}
+    \section{\TeX~Distributions}
+        \begin{frame}
+            \frametitle{Distributions and Operating Systems}
 
+            \centering
+            \begin{tabular}{cccc}
+                & Linux & MacOS & Windows \\
+                TeXLive & \checkmark & \checkmark & \checkmark \\
+                MacTeX  &  & \checkmark &  \\
+                MiKTeX  &  &  & \checkmark \\
+                ProTeXt &  &  & \checkmark
+            \end{tabular}
+            % \begin{columns}
+            %     \begin{column}{0.31\textwidth}
+            %         Linux:
+            %         \begin{itemize}
+            %             \item TeXLive
+            %         \end{itemize}
+            %     \end{column}
+            %     \begin{column}{0.31\textwidth}
+            %         MacOS:
+            %         \begin{itemize}
+            %             \item TeXLive
+            %             \item MacTeX
+            %         \end{itemize}
+            %     \end{column}
+            %     \begin{column}{0.31\textwidth}
+            %         MS Windows:
+            %         \begin{itemize}
+            %             \item TeXLive
+            %             \item MiKTeX
+            %             \item ProTeXt
+            %         \end{itemize}
+            %     \end{column}
+            % \end{columns}
+        \end{frame}
+    \section{External Tools}
+        \begin{frame}
+            \frametitle{Matplotlib - Python Plotting}
+        \end{frame}
+        \begin{frame}
+            \frametitle{Sympy - Symbolic Math in Python}
+        \end{frame}
+        \begin{frame}
+            \frametitle{Sympy - Symbolic Math in Python}
+        \end{frame}
+        \begin{frame}
+            \frametitle{Inkscape - Drawing and Manipulating Vector Graphics}
+        \end{frame}
+    % \section{Backmatter}
+    %     \begin{frame}[allowframebreaks]
+    %         \frametitle{Bibliography}
+    %         \printbibliography
+    %     \end{frame}
+    %     \begin{frame}[allowframebreaks]
+    %         \frametitle{Acronyms}
+    %         \printglossary[type=\acronymtype]
+    %     \end{frame}
+    %     \begin{frame}[allowframebreaks]
+    %         \frametitle{Glossary}
+    %         \printglossary[type=main]
+    %     \end{frame}
+    %     \begin{frame}[allowframebreaks]
+    %         \frametitle{Constants}
+    %         \printglossary[type=constants, nonumberlist, nopostdot]
+    %     \end{frame}
+    %     \begin{frame}[allowframebreaks]
+    %         \frametitle{Symbols}
+    %         \printglossary[type=symbols]
+    %     \end{frame}
 \end{document}
