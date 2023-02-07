@@ -47,17 +47,19 @@
 \usepackage{pgfplots} % to produce tikz/pgf vector graphic plots within your document
 \usepackage[siunitx,american voltages, american currents, RPvoltages]{circuitikz} % circuits with tikz
 \usepackage{hologo}
+\usepackage{luacode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% PACKAGE SETUP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % minted
 \definecolor{LightGray}{gray}{0.9}
-\setminted{linenos=false, autogobble, fontsize=\small, breaklines=true, bgcolor=LightGray} % global default options for minted
+\colorlet{PresentationBlack}{black!2}
+\setminted{linenos=false, autogobble, fontsize=\tiny, breaklines=true, bgcolor=LightGray, breakbefore=\{} % global default options for minted
 \setmintedinline{bgcolor={}} % global default options for inline minted
 
 % tikz
-\usetikzlibrary{math, arrows, circuits.ee.IEC, positioning, shapes.arrows, shapes.geometric, automata}
+\usetikzlibrary{math, arrows, circuits.ee.IEC, positioning, shapes.arrows, shapes.geometric, automata, fadings}
 
 % pgfplots
 \pgfplotsset{compat=newest, compat/show suggested version=false}
@@ -123,9 +125,63 @@ table-align-comparator = true,
           arc [ radius     =\pgfkeysvalueof{/tikz/kinky cross radius},
                 start angle=\n{@kc@},
                 delta angle=\pgfkeysvalueof{/tikz/@kinky cross}180 ]
-          -- (\tikztotarget)}}
-      }
+          -- (\tikztotarget)}},
+    onslide/.code args={<#1>#2}{%
+        \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+    },
+    myfading/.style n args={2}{
+        postaction={
+            decorate,
+            decoration={
+                markings,
+                mark=between positions 0 and \pgfdecoratedpathlength-4pt step 0.2pt with {
+                    \pgfmathsetmacro\myval{
+                            multiply(
+                                divide(
+                                    \pgfkeysvalueof{/pgf/decoration/mark info/distance from start},
+                                    \pgfdecoratedpathlength
+                                ),
+                                100
+                            )
+                    };
+                    \pgfsetfillcolor{#2!\myval!#1};
+                    \pgfpathcircle{\pgfpointorigin}{\pgflinewidth};
+                    \pgfusepath{fill};
+                },
+                mark=at position \pgfdecoratedpathlength with {\arrow[#2, >=latex, xshift=0.35\pgflinewidth]{>}},
+            }
+        }
+    },
+}
+\usepackage[most]{tcolorbox}
+\usepackage{tikzpagenodes}
 
+\def\myblur{4}
+
+\makeatletter
+\newtcolorbox{blur}[1][]{%
+  #1,
+  enhanced,
+  remember,
+  frame hidden,
+  interior hidden,
+  fonttitle=\bfseries,
+  coltitle=black,
+  underlay={
+    \begin{tcbclipframe}
+      \begin{scope}[remember picture,overlay,inner sep=0pt]
+        \fill[white] (current page.south west) rectangle (current page.north east);
+        \foreach \x in {-10,-7.5,...,10}{
+        \foreach \y in {-10,-7.5,...,10}{
+          \node[opacity=0.01] at ([yshift=\y,xshift=\x]current page.center) {\includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}};
+        }}
+      \end{scope}
+    \end{tcbclipframe}
+   }
+}
+\makeatother
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
 % For using the standalone package and conditionally typesetting bibliography and glossaries
 \newboolean{standaloneFlag}
@@ -140,3 +196,19 @@ table-align-comparator = true,
     \printglossary[type=acronymtype]
     \printglossary[type=main]
   }{}}
+
+% Code for Lua search and Replace
+
+\directlua{
+    path = "\luacodePath"
+    demo = require(path.."/searchandreplace")
+}
+\newcommand\luastringsubs[2]{%
+    \directlua{
+        replacementsPreTable = [[#1]]
+        filepath = [[#2]]
+        subbedString = stringReplaceFromFile(replacementsPreTable, filepath)
+        -- print(subbedString)
+        -- tex.sprint(subbedString)
+    }%
+}

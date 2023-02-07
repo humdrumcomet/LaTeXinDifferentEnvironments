@@ -1,7 +1,4 @@
 % arara: lualatex: { shell: true, interaction: nonstopmode }
-% arara: makeglossaries
-% arara: biber
-% arara: lualatex: { shell: true, interaction: nonstopmode }
 % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
 
 \providecommand{\toplevel}{..}
@@ -9,6 +6,7 @@
 \providecommand{\importPath}{\sharedPath/Imports}
 \providecommand{\bibPath}{\sharedPath/bibFiles}
 \providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\luacodePath}{\toplevel/Shared/luaCode}
 
 % Demo report and presentation prepared by Aaron English (humdrumcomet on github)
 \documentclass{beamer}
@@ -18,10 +16,9 @@
 \input{\importPath/preamble}
 \input{\importPath/glossary}
 \input{\importPath/symbols}
-\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
-\title{Hello Beamer!}
-\subtitle{\LaTeX~in Different Environments}
+
+\title{\LaTeX~in Different Environments}
 \author{Ghassan Arnouk \and
             Alec Bales D'Cruze \and
             Aaron English}
@@ -38,21 +35,6 @@
         \begin{frame}
             \frametitle{The Most Common Members}
             \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}
-        \end{frame}
-        \begin{frame}
-            \frametitle{\Hologo{TeX}}
-        \end{frame}
-        \begin{frame}
-            \frametitle{\Hologo{LaTeX}}
-        \end{frame}
-        \begin{frame}
-            \frametitle{\Hologo{pdfTeX}}
-        \end{frame}
-        \begin{frame}
-            \frametitle{\Hologo{XeTeX}}
-        \end{frame}
-        \begin{frame}
-            \frametitle{\Hologo{LuaTeX}}
         \end{frame}
     \section{Processing \TeX~Files}
         \begin{frame}[fragile]
@@ -105,7 +87,6 @@
     \section{\TeX~Distributions}
         \begin{frame}
             \frametitle{Distributions and Operating Systems}
-
             \centering
             \begin{tabular}{cccc}
                 & Linux & MacOS & Windows \\
@@ -116,16 +97,79 @@
             \end{tabular}
         \end{frame}
     \section{External Tools}
-        \begin{frame}
+        \begin{frame}[t,fragile]
             \frametitle{Matplotlib - Python Plotting}
+            \begin{columns}[onlytextwidth]
+                \begin{column}[T]{0.75\textwidth}
+                    \begin{onlyenv}<1>
+                        \inputminted{python}{\assetPath/Code/matplotlibexample.py}
+                    \end{onlyenv}
+                    \begin{onlyenv}<2>
+                        \inputminted[firstline=29,lastline=45]{latex}{\assetPath/Code/examplePlot.tex}
+                    \end{onlyenv}
+                    \begin{onlyenv}<3>
+                        \begin{minted}{latex}
+                        \begin{figure}[H]
+                        \begin{centering}
+                        \includegraphics[width=0.5\textwidth] {\assetPath/Code/examplePlot.tex}
+                        \caption{A figure produced with matplotlib}
+                        \label{fig:test}
+                        \end{centering}
+                        \end{figure}
+                        \end{minted}
+                    \end{onlyenv}
+                    \only<4>{\includestandalone[mode=tex, width=\textwidth]{\assetPath/Code/examplePlot}}
+                \end{column}\hfill
+                \begin{column}[T]{0.2\textwidth}
+                    \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/matplotlibFlow/matplotlibflow}
+                \end{column}
+            \end{columns}
         \end{frame}
-        \begin{frame}
+        \begin{frame}[t,fragile]
             \frametitle{Sympy - Symbolic Math in Python}
-        \end{frame}
-        \begin{frame}
-            \frametitle{Sympy - Symbolic Math in Python}
+            \begin{columns}[onlytextwidth]
+                \begin{column}[T]{0.75\textwidth}
+                    \begin{onlyenv}<1>
+                        \inputminted{python}{\assetPath/Code/sympyexample.py}
+                    \end{onlyenv}
+                    \begin{onlyenv}<2>
+                        \begin{minted}{latex}
+                        \begin{equation}a^{b} e + \frac{c}{d}\end{equation}
+                        \begin{equation}\frac{\partial}{\partial b} \left(a^{b} e + \frac{c}{d}\right) = a^{b} e \log{\left(a \right)}\end{equation}
+                        \begin{equation}\int \left(a^{b} e + \frac{c}{d}\right)\, da = \frac{a c}{d} + \frac{a^{b + 1} e}{b + 1}\end{equation}
+                        \end{minted}
+                    \end{onlyenv}
+                    \only<3>{
+                        \begin{equation}a^{b} e + \frac{c}{d}\end{equation}
+                        \begin{equation}\frac{\partial}{\partial b} \left(a^{b} e + \frac{c}{d}\right) = a^{b} e \log{\left(a \right)}\end{equation}
+                        \begin{equation}\int \left(a^{b} e + \frac{c}{d}\right)\, da = \frac{a c}{d} + \frac{a^{b + 1} e}{b + 1}\end{equation}
+                    }
+                \end{column}\hfill
+                \begin{column}[T]{0.2\textwidth}
+                    \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/sympyFlow/sympyflow}
+                \end{column}
+            \end{columns}
         \end{frame}
         \begin{frame}
             \frametitle{Inkscape - Drawing and Manipulating Vector Graphics}
+            % \begin{columns}[onlytextwidth]
+            %     \begin{column}[T]{0.75\textwidth}
+            %         \begin{onlyenv}<1>
+            %         \end{onlyenv}
+            %         \begin{onlyenv}<2>
+            %         \end{onlyenv}
+            %         \only<3>{
+            %             \centering
+            %             \def\svgwidth{\columnwidth}
+            %             \luastringsubs{
+            %             {y' (rad)}={$y^{\prime}(\si{\radian})$},
+            %             {y (m)}={$y(\si{\meter})$}
+            %             }{./demoout.pdf_tex}
+            %         }
+            %     \end{column}\hfill
+            %     \begin{column}[T]{0.2\textwidth}
+            %         \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/sympyFlow/sympyflow}
+            %     \end{column}
+            % \end{columns}
         \end{frame}
 \end{document}

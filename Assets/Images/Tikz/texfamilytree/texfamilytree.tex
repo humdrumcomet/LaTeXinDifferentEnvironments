@@ -1,10 +1,8 @@
-% arara: lualatex: { shell: true}
-% arara: lualatex: { shell: true}
-
 \providecommand{\toplevel}{../../../..}
 \providecommand{\importPath}{\toplevel/Shared/Imports}
 \providecommand{\assetPath}{\toplevel/Assets}
 \providecommand{\sharedPath}{\toplevel/Shared}
+\providecommand{\bibPath}{\toplevel/Shared/bibFiles}
 
 \documentclass[tikz, hidelinks, float=false, crop=false]{standalone}
 
@@ -13,27 +11,28 @@
 \input{\importPath/symbols}
 
 \begin{document}
-        \begin{tikzpicture}[->, -latex, auto, node distance=90]
-                \node[state](1) {\hologo{TeX}};
-                \node[state](2)[below left of=1] {\hologo{LaTeX}};
-                \node[state](3)[left of=2] {\hologo{XeTeX}};
-                \node[state](4)[below right of=1] {\hologo{pdfTeX}};
-                \node[state](5)[right of=4] {\hologo{LuaTeX}};
-                \node[state](6)[below of=3] {\hologo{XeLaTeX}};
-                \node[state](7)[below of=2] {\hologo{pdfLaTeX}};
-                \node[state](8)[below of=4] {\hologo{LuaLaTeX}};
-                \node[state](9)[below of=5] {\hologo{ConTeXt}};
-                \path (1) edge (2)
-                      (1) edge (3)
-                      (1) edge (4)
-                      (1) edge (5)
-                      (2) edge (6)
-                      (3) edge (6)
-                      (2) edge (7)
-                      (4) edge (7)
-                      (2) edge (8)
-                      (5) edge (8)
-                      (5) edge (9);
-
-\end{tikzpicture}
+    \begin{tikzpicture}[->, >=latex, auto, node distance=90, line width=1pt]
+        \node[state, onslide=<2>{blue}](tex) {\hologo{TeX}};
+        \node[state](latex)[below left of=tex, onslide=<3>{blue}] {\hologo{LaTeX}};
+        \node[state](xetex)[left of=latex, onslide=<5>{blue}] {\hologo{XeTeX}};
+        \node[state](pdftex)[below right of=tex, onslide=<4>{blue}] {\hologo{pdfTeX}};
+        \node[state](luatex)[right of=pdftex, onslide=<6>{blue}] {\hologo{LuaTeX}};
+        \node[state](xelatex)[below of=xetex, onslide=<8>{blue}] {\hologo{XeLaTeX}};
+        \node[state](pdflatex)[below of=latex, onslide=<7>{blue}] {\hologo{pdfLaTeX}};
+        \node[state](lualatex)[below of=pdftex, onslide=<9>{blue}] {\hologo{LuaLaTeX}};
+        \node[state](context)[below of=luatex, onslide=<10>{blue}] {\hologo{ConTeXt}};
+        \path (tex) edge[onslide={<3>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (latex)
+              (tex) edge[onslide={<5>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (xetex)
+              (tex) edge[onslide={<4>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (pdftex)
+              (tex) edge[onslide={<6>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (luatex)
+              (latex) edge[onslide={<8>{myfading={mDarkTeal}{blue}}}, onslide={<3>{myfading={blue}{mDarkTeal}}}] (xelatex)
+              (latex) edge[onslide={<7>{myfading={mDarkTeal}{blue}}}, onslide={<3>{myfading={blue}{mDarkTeal}}}] (pdflatex)
+              (latex) edge[onslide={<9>{myfading={mDarkTeal}{blue}}}, onslide={<3>{myfading={blue}{mDarkTeal}}}] (lualatex)
+              (xetex) edge[onslide={<8>{myfading={mDarkTeal}{blue}}}, onslide={<5>{myfading={blue}{mDarkTeal}}}] (xelatex)
+              (pdftex) edge[onslide={<8>{myfading={mDarkTeal}{blue}}}, onslide={<4>{myfading={blue}{mDarkTeal}}}] (xelatex)
+              (pdftex) edge[onslide={<7>{myfading={mDarkTeal}{blue}}}, onslide={<4>{myfading={blue}{mDarkTeal}}}] (pdflatex)
+              (pdftex) edge[onslide={<9>{myfading={mDarkTeal}{blue}}}, onslide={<4>{myfading={blue}{mDarkTeal}}}] (lualatex)
+              (luatex) edge[onslide={<9>{myfading={mDarkTeal}{blue}}}, onslide={<6>{myfading={blue}{mDarkTeal}}}] (lualatex)
+              (luatex) edge[onslide={<10>{myfading={mDarkTeal}{blue}}}, onslide={<6>{myfading={blue}{mDarkTeal}}}] (context);
+    \end{tikzpicture}
 \end{document}
