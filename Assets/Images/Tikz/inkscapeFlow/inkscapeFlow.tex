@@ -15,7 +15,7 @@
 \begin{document}
     \begin{tikzpicture}[thick]
         \draw (0,0) node[rectangle, draw, onslide=<1>{blue}, minimum width=24mm, minimum height = 10mm, align=center](pycode){Vector\\Graphic};
-        \draw[->, >=Stealth] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, align=center, onslide=<2>{blue}](latexcode){Inkscape\\PDF+\TeX};
-        \draw[->, >=Stealth] (latexcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, align=center, onslide=<3>{blue}](equations){Integrated\\Figure};
+        \draw[->, >=Stealth] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, align=center, onslide={<2-5>{blue}}](latexcode){Inkscape\\PDF+\TeX};
+        \draw[->, >=Stealth] (latexcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, align=center, onslide=<6>{blue}](equations){Integrated\\Figure};
     \end{tikzpicture}
 \end{document}

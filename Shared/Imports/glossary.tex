@@ -1,12 +1,125 @@
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% Acronym Only
-\newglossaryentry{ndfeb}
+\newglossaryentry{vram}
 {
     type=\acronymtype,
-    name={NdFeB},
-    description={Neodymium Iron Boron Rare Earth Permanent Magnet},
-    first={Neodymium iron boron (NdFeB)}
+    name={VRAM},
+    description={Video \glsentrydesc{ram}},
+    first={\glsentrydesc{vram} (\glsentrytext{vram})}
 }
+\newglossaryentry{dram}
+{
+    type=\acronymtype,
+    name={DRAM},
+    description={Dynamic \glsentrydesc{ram}},
+    first={\glsentrydesc{vram} (\glsentrytext{vram})}
+}
+\newglossaryentry{ram}
+{
+    type=\acronymtype,
+    name={RAM},
+    description={Random Access Memory},
+    first={\glsentrydesc{ram} (\glsentrytext{ram})}
+}
+\newglossaryentry{asic}
+{
+  type=\acronymtype,
+  name={ASIC},
+  description={Application Specific \glsentrydesc{IC}},
+  first={\glsentrydesc{asic} (\glsentrytext{asic})}
+}
+\newglossaryentry{ic}
+{
+  type=\acronymtype,
+  name={IC},
+  description={Integrated Circuit},
+  first={\glsentrydesc{ic} (\glsentrytext{ic})}
+}
+\newglossaryentry{rom}
+{
+  type=\acronymtype,
+  name={ROM},
+  description={Read-Only-Memory},
+  first={\glsentrydesc{rom} (\glsentrytext{rom})}
+}
+\newglossaryentry{risc}
+{
+  type=\acronymtype,
+  name={RISC},
+  description={Reduced Instruction Set},
+  first={\glsentrydesc{risc} (\glsentrytext{risc})}
+}
+\newglossaryentry{ide}
+{
+  type=\acronymtype,
+  name={IDE},
+  description={Integrated Drive Electronics},
+  first={\glsentrydesc{ide} (\glsentrytext{ide})}
+}
+\newglossaryentry{mux}
+{
+  type=\acronymtype,
+  name={mux},
+  description={multiplexer},
+  first={\glsentrydesc{mux} (\glsentrytext{mux})}
+}
+\newglossaryentry{i/o}
+{
+  type=\acronymtype,
+  name={I/O},
+  description={Input/Output},
+  first={\glsentrydesc{i/o} (\glsentrytext{i/o})}
+}
+\newglossaryentry{cpu}
+{
+  type=\acronymtype,
+  name={CPU},
+  description={Central Processing Unit},
+  first={\glsentrydesc{cpu} (\glsentrytext{cpu})}
+}
+\newglossaryentry{iomd}
+{
+  type=\acronymtype,
+  name={IOMD},
+  description={\glsentrydesc{i/o} Memory Device},
+  first={\glsentrydesc{iomd} (\glsentrytext{iomd})}
+}
+\newglossaryentry{rtc}
+{
+  type=\acronymtype,
+  name={RTC},
+  description={Real Time Clock},
+  first={\glsentrydesc{rtc} (\glsentrytext{rtc})}
+}
+\newglossaryentry{i2c}
+{
+  type=\acronymtype,
+  name={I\textsuperscript{2}C},
+  description={Inter-Integrated Circuit},
+  first={\glsentrydesc{i2c} (\glsentrytext{i2c})}
+}
+\newglossaryentry{i/f}
+{
+  type=\acronymtype,
+  name={i/f},
+  description={longform},
+  first={\glsentrydesc{i/f} (\glsentrytext{i/f})}
+}
+\newglossaryentry{upc}
+{
+  type=\acronymtype,
+  name={UPC},
+  description={longform},
+  first={\glsentrydesc{upc} (\glsentrytext{upc})}
+}
+\newglossaryentry{pc}
+{
+  type=\acronymtype,
+  name={PC},
+  description={Personal Computer},
+  first={\glsentrydesc{pc} (\glsentrytext{pc})}
+}
+
 
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% Glossary Only
@@ -18,19 +131,3 @@
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% Glossary and Acronym
 % Self referencing glossary entry to minimize what needs to be edited between changes
-\newglossaryentry{cwvmg}
-{
-    name={\glsentrytext{cwvm}},
-    description={\glsentrydesc{cwvm} (\glsentrytext{cwvm}) is a voltage multiplier that can be cascaded to give an output voltage of \(nV_{p-p}\) with \(n\) being the number of stages}
-}
-\newglossaryentry{cwvm}
-{
-    type=\acronymtype,
-    name={CWVM},
-    description={Cockroft-Walton voltage multiplier},
-    first={\glsentrydesc{cwvm} (\glsentrytext{cwvm})\glsadd{cwvmg}},
-    plural={\glsentrytext{cwvm}s},
-    descriptionplural={\glsentrydesc{cwvm}s},
-    firstplural={\glsentrydescplural{cwvm} (\glsentryplural{cwvm})},
-    see=[Glossary:]{cwvmg}
-}

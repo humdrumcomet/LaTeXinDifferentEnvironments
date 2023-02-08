@@ -1,0 +1,22 @@
+% arara: lualatex: { shell: true}
+% arara: lualatex: { shell: true}
+
+\providecommand{\toplevel}{../../../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+\documentclass[tikz, hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+    \begin{tikzpicture}[thick]
+        \draw (0,0) node[doc, align=left](pdf){Vector\\Graphic\\File (\mintinline{sh}{.pdf}\\or \mintinline{sh}{.svg})};
+        \draw[->, >=Stealth] (pdf) -- ++(2,0) node[rectangle,draw,anchor=west,align=left](inkscape){Inkscape Export\\PDF+\TeX};
+        \draw[->, >=Stealth] (inkscape) -- ++(2,2) node[doc,anchor=west](pdfout){PDF without\\text (\mintinline{sh}{.pdf})};
+        \draw[->, >=Stealth] (inkscape) -- ++(2,-2) node[doc,anchor=west](pdftex){\TeX~file\\(\mintinline{sh}{.pdf_tex})};
+    \end{tikzpicture}
+\end{document}

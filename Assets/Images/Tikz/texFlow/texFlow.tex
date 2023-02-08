@@ -1,0 +1,22 @@
+% arara: lualatex: { shell: true}
+% arara: lualatex: { shell: true}
+
+\providecommand{\toplevel}{../../../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+\documentclass[tikz, hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+    \begin{tikzpicture}[thick]
+        \draw (0,0)  node[rectangle, draw, align=left, onslide=<2-3>{blue}](editor){\LaTeX\\Editor};
+        \draw[->, >=Stealth] (editor) -- ++(2,0) node[doc, draw, anchor=west](tex){\mintinline{sh}{.tex}};
+        \draw[->, >=Stealth] (tex) -- ++(2,0) node[rectangle,draw,anchor=west, align=left, onslide=<4->{blue}](compiler){\LaTeX\\Compilation};
+        \draw[->, >=Stealth] (compiler) -- ++(2,0) node[doc,anchor=west](pdf){\mintinline{sh}{.pdf}};
+    \end{tikzpicture}
+\end{document}

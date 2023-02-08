@@ -18,12 +18,38 @@
 
 \input{\importPath/preamble}
 \input{\importPath/glossary}
-\input{\importPath/symbols}
 
 \luastringsubs{
   {Acorn-RiscPC-LaTeX.pdf}={\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf},
-
+  {Risc PC system organisation}={\textbf{\huge Risc \glstext{pc} system organisation}},
+  {ARMCPU}={{\textbf{\Large ARM \glstext{cpu}}}},
+  {2nd CPU}={\textbf{\Large 2\textsuperscript{nd} \glstext{cpu}}},
+  {VRAM}={\textbf{\Large\glstext{vram}}},
+  {DRAM}={\textbf{\Large \glstext{dram}}},
+  {i/f ASIC}={\textbf{\Large \glstext{i/f} \glstext{asic}}},
+  {expansion cards}={\textbf{\Large expansion cards}},
+  {IDE disk}={\textbf{\Large \glstext{ide} disk}},
+  {floppy disc}={\textbf{\Large floppy disc}},
+  {ROM}={\textbf{\Large \glstext{rom}}},
+  {RTC}={\textbf{\Large \glstext{rtc}}},
+  {I2C}={\textbf{\Large \glstext{i2c}}},
+  {IOMD}={\textbf{\Large \glstext{iomd}}},
+  {network}={\textbf{\Large network}},
+  {UPC}={\textbf{\Large \glstext{upc}}},
+  {parallel i/f}={\textbf{parallel \glstext{i/f}}},
+  {serial i/f}={\textbf{serial \glstext{i/f}}},
+  {Lo 16-bit buffered I/O data}={\textbf{Lo \SI{16}{b} buffered \glstext{i/o} data}},
+  {video}={\textbf{\large video}},
+  {VIDC20}={\textbf{\Large VIDC20}},
+  {data bus}={\textbf{\large data bus}},
+  {mux addr}={\textbf{\large \glstext{mux} addr.}},
+  {address bus}={\textbf{\large address bus}},
+  {serial\\data}={\textbf{\large serial}\\ \textbf{\large data }},
+  {analogue\\sound}={\textbf{\large analogue}\\ \textbf{\large sound}},
+  {latched\\address\\bus}={\textbf{\large latched}\\ \textbf{\large address} \\ \textbf{\large bus}},
+  {Hi 16-bit\\I/O data}={\textbf{\large Hi \SI{16}{b}}\\ \textbf{\large \glstext{i/o} data}},
 }{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf_tex}{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-pdf-tex.tex}
+
 \luastringsubs{
   {Acorn-RiscPC-LaTeX.pdf}={\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf},
 
@@ -43,70 +69,101 @@
         \frametitle{Contents}
         \tableofcontents
     \end{frame}
-    % \section{The \TeX~Family Tree}
-    %     \begin{frame}
-    %         \frametitle{The Most Common Members}
-    %         \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}
-    %     \end{frame}
-    \section{Processing \TeX~Files}
-        \begin{frame}[fragile]
-            \frametitle{Manually in Shell/Bash/Etc.}
-            \begin{centering}
-                \begin{minted}{bash}
-                    pdflatex --shell-escape --interaction=nonstopmode report
-                    biber report
-                    makeglossaries report
-                    pdflatex --shell-escape --interaction=nonstopmode report
-                    pdflatex --shell-escape --interaction=nonstopmode report
-                \end{minted}
-            \end{centering}
-        \end{frame}
-        \begin{frame}[fragile]
-            \frametitle{Passing Commands at Compile Time}
-            \begin{centering}
-                \begin{minted}{bash}
-                    lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft} \\input{report}"
-                    biber report
-                    makeglossaries report
-                    lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft} \\input{report}"
-                    lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{final} \\input{report}"
-                \end{minted}
-            \end{centering}
-        \end{frame}
-        \begin{frame}[fragile]
-            \frametitle{latexmk}
-            \begin{centering}
-                \begin{minted}{bash}
-                    latexmk -pdf report.tex
-                \end{minted}
-            \end{centering}
-        \end{frame}
-        \begin{frame}[fragile]
-            \frametitle{ARARA}
-            \begin{centering}
-                \begin{minted}{latex}
-                    % arara: lualatex: { shell: true, interaction: nonstopmode }
-                    % arara: makeglossaries
-                    % arara: biber
-                    % arara: lualatex: { shell: true, interaction: nonstopmode }
-                    % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
-                \end{minted}
-                \begin{minted}{bash}
-                    arara -v report.tex
-                \end{minted}
-            \end{centering}
-        \end{frame}
-    \section{\TeX~Distributions}
+    \section{The \TeX~Family Tree}
         \begin{frame}
-            \frametitle{Distributions and Operating Systems}
-            \centering
-            \begin{tabular}{cccc}
-                & Linux & MacOS & Windows \\
-                TeXLive & \checkmark & \checkmark & \checkmark \\
-                MacTeX  &  & \checkmark &  \\
-                MiKTeX  &  &  & \checkmark \\
-                ProTeXt &  &  & \checkmark
-            \end{tabular}
+            \frametitle{The Most Common Members}
+            \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}
+        \end{frame}
+    \section{Processing \TeX~Files}
+        \begin{frame}[t,fragile]
+            \frametitle<-5>{The \TeX~Procedure}
+                \includestandalone[mode=tex, height=0.3\textheight]{\assetPath/Images/Tikz/texFlow/texFlow}
+                \begin{onlyenv}<2>
+                    \begin{table}
+                        \centering
+                        \caption{\LaTeX~Specific Editors}
+                        \begin{tabular}{cccc}
+                            & Linux & MacOS & Windows \\
+                            TeXStudio & \checkmark & \checkmark & \checkmark \\
+                            TeXMaker  & \checkmark & \checkmark & \checkmark \\
+                            TeXnicCenter  & \checkmark & \checkmark & \checkmark \\
+                        \end{tabular}
+                    \end{table}
+                \end{onlyenv}
+                \begin{onlyenv}<3>
+                    \begin{table}
+                        \centering
+                        \caption{Generic Text Editors with \LaTeX~Specific Extra's}
+                        \begin{tabular}{cccc}
+                            & Linux & MacOS & Windows \\
+                            Emacs & \checkmark & \checkmark & \checkmark \\
+                            Vim  & \checkmark & \checkmark & \checkmark \\
+                            VSCode  & \checkmark & \checkmark & \checkmark \\
+                            Sublime Text & \checkmark & \checkmark & \checkmark
+                        \end{tabular}
+                    \end{table}
+                \end{onlyenv}
+                \begin{onlyenv}<4>
+                    \begin{table}
+                        \centering
+                        \caption{\TeX~Distributions for Different Operating Systems}
+                        \centering
+                        \begin{tabular}{cccc}
+                            & Linux & MacOS & Windows \\
+                            TeXLive & \checkmark & \checkmark & \checkmark \\
+                            MacTeX  &  & \checkmark &  \\
+                            MiKTeX  &  &  & \checkmark \\
+                            ProTeXt &  &  & \checkmark
+                        \end{tabular}
+                    \end{table}
+                \end{onlyenv}
+                \frametitle<5>{Manually in Shell/Bash/Etc.}
+                \begin{onlyenv}<5>
+                    \begin{centering}
+                        \begin{minted}{bash}
+                            pdflatex --shell-escape --interaction=nonstopmode report
+                            biber report
+                            makeglossaries report
+                            pdflatex --shell-escape --interaction=nonstopmode report
+                            pdflatex --shell-escape --interaction=nonstopmode report
+                        \end{minted}
+                    \end{centering}
+                \end{onlyenv}
+                \frametitle<6>{Passing Commands at Compile Time}
+                \begin{onlyenv}<6>
+                    \begin{centering}
+                        \begin{minted}{bash}
+                            lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft} \\input{report}"
+                            biber report
+                            makeglossaries report
+                            lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{draft} \\input{report}"
+                            lualatex --shell-escape --interaction=nonstopmode "\\providecommand{\\iswhichmode}{final} \\input{report}"
+                        \end{minted}
+                    \end{centering}
+                \end{onlyenv}
+                \frametitle<7>{latexmk}
+                \begin{onlyenv}<7>
+                    \begin{centering}
+                        \begin{minted}{bash}
+                            latexmk -pdf report.tex
+                        \end{minted}
+                    \end{centering}
+                \end{onlyenv}
+                \frametitle<8>{ARARA}
+                \begin{onlyenv}<8>
+                    \begin{centering}
+                        \begin{minted}{latex}
+                            % arara: lualatex: { shell: true, interaction: nonstopmode }
+                            % arara: makeglossaries
+                            % arara: biber
+                            % arara: lualatex: { shell: true, interaction: nonstopmode }
+                            % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
+                        \end{minted}
+                        \begin{minted}{bash}
+                            arara -v report.tex
+                        \end{minted}
+                    \end{centering}
+                \end{onlyenv}
         \end{frame}
     \section{External Tools}
         \begin{frame}[t,fragile]
@@ -164,7 +221,7 @@
                 \end{column}
             \end{columns}
         \end{frame}
-        \begin{frame}
+        \begin{frame}[t,fragile]
             \frametitle{Inkscape - Drawing and Manipulating Vector Graphics}
             \begin{columns}[onlytextwidth]
                 \begin{column}[T]{0.75\textwidth}
@@ -176,18 +233,35 @@
                         \label{fig:texsub}
                         \end{figure}
                     }
-                    \only<2>{
+                    \begin{onlyenv}<2>
+                        \includestandalone[mode=tex, width=0.9\textwidth]{\assetPath/Images/Tikz/inkscapeConversion/inkscapeConversion}
+                    \end{onlyenv}
+                    \begin{onlyenv}<3>
+                        \inputminted[firstline=27,lastline=46]{latex}{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf_tex}
+                    \end{onlyenv}
+                    \begin{onlyenv}<4>
+                        \begin{minted}{latex}
+                        \begin{figure}[H]
+                        \begin{centering}
+                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-path}
+                        \caption{Inkscape PDF+\TeX}
+                        \label{fig:test}
+                        \end{centering}
+                        \end{figure}
+                        \end{minted}
+                    \end{onlyenv}
+                    \only<5>{
                         \begin{figure}
                         \centering
-                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-pdf-tex}
+                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-path}
                         \caption{Directly incorporating Inkscape PDF+\TeX~export of the Acorn Risc PC block diagram}
                         \label{fig:texsub}
                         \end{figure}
                     }
-                    \only<3>{
+                    \only<6>{
                         \begin{figure}
                         \centering
-                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-path}
+                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-pdf-tex}
                         \caption{Inkscape PDF+\TeX~of the Acorn Risc PC block diagram with substitution of text via \hologo{LuaLaTeX}}
                         \label{fig:texsub}
                         \end{figure}
@@ -208,16 +282,16 @@
             \frametitle{Acronyms}
             \printglossary[type=\acronymtype]
         \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Glossary}
-            \printglossary[type=main]
-        \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Constants}
-            \printglossary[type=constants, nonumberlist, nopostdot]
-        \end{frame}
-        \begin{frame}[allowframebreaks]
-            \frametitle{Symbols}
-            \printglossary[type=symbols]
-        \end{frame}
+        % \begin{frame}[allowframebreaks]
+        %     \frametitle{Glossary}
+        %     \printglossary[type=main]
+        % \end{frame}
+        % \begin{frame}[allowframebreaks]
+        %     \frametitle{Constants}
+        %     \printglossary[type=constants, nonumberlist, nopostdot]
+        % \end{frame}
+        % \begin{frame}[allowframebreaks]
+        %     \frametitle{Symbols}
+        %     \printglossary[type=symbols]
+        % \end{frame}
 \end{document}
