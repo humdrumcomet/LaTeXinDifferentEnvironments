@@ -21,18 +21,18 @@
         \node[state](pdflatex)[below of=latex, onslide=<7>{blue}] {\hologo{pdfLaTeX}};
         \node[state](lualatex)[below of=pdftex, onslide=<9>{blue}] {\hologo{LuaLaTeX}};
         \node[state](context)[below of=luatex, onslide=<10>{blue}] {\hologo{ConTeXt}};
-        \path (tex) edge[onslide={<3>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (latex)
-              (tex) edge[onslide={<5>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (xetex)
-              (tex) edge[onslide={<4>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (pdftex)
-              (tex) edge[onslide={<6>{myfading={mDarkTeal}{blue}}}, onslide={<2>{myfading={blue}{mDarkTeal}}}] (luatex)
-              (latex) edge[onslide={<8>{myfading={mDarkTeal}{blue}}}, onslide={<3>{myfading={blue}{mDarkTeal}}}] (xelatex)
-              (latex) edge[onslide={<7>{myfading={mDarkTeal}{blue}}}, onslide={<3>{myfading={blue}{mDarkTeal}}}] (pdflatex)
-              (latex) edge[onslide={<9>{myfading={mDarkTeal}{blue}}}, onslide={<3>{myfading={blue}{mDarkTeal}}}] (lualatex)
-              (xetex) edge[onslide={<8>{myfading={mDarkTeal}{blue}}}, onslide={<5>{myfading={blue}{mDarkTeal}}}] (xelatex)
-              (pdftex) edge[onslide={<8>{myfading={mDarkTeal}{blue}}}, onslide={<4>{myfading={blue}{mDarkTeal}}}] (xelatex)
-              (pdftex) edge[onslide={<7>{myfading={mDarkTeal}{blue}}}, onslide={<4>{myfading={blue}{mDarkTeal}}}] (pdflatex)
-              (pdftex) edge[onslide={<9>{myfading={mDarkTeal}{blue}}}, onslide={<4>{myfading={blue}{mDarkTeal}}}] (lualatex)
-              (luatex) edge[onslide={<9>{myfading={mDarkTeal}{blue}}}, onslide={<6>{myfading={blue}{mDarkTeal}}}] (lualatex)
-              (luatex) edge[onslide={<10>{myfading={mDarkTeal}{blue}}}, onslide={<6>{myfading={blue}{mDarkTeal}}}] (context);
+        \path (tex) edge[onslide={<3>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<2>{black!2, myfading={blue}{mDarkTeal}}}] (latex)
+              (tex) edge[onslide={<5>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<2>{black!2, myfading={blue}{mDarkTeal}}}] (xetex)
+              (tex) edge[onslide={<4>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<2>{black!2, myfading={blue}{mDarkTeal}}}] (pdftex)
+              (tex) edge[onslide={<6>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<2>{black!2, myfading={blue}{mDarkTeal}}}] (luatex)
+              (latex) edge[onslide={<8>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<3>{black!2, myfading={blue}{mDarkTeal}}}] (xelatex)
+              (latex) edge[onslide={<7>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<3>{black!2, myfading={blue}{mDarkTeal}}}] (pdflatex)
+              (latex) edge[onslide={<9>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<3>{black!2, myfading={blue}{mDarkTeal}}}] (lualatex)
+              (xetex) edge[onslide={<8>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<5>{black!2, myfading={blue}{mDarkTeal}}}] (xelatex)
+              (pdftex) edge[onslide={<8>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<4>{black!2, myfading={blue}{mDarkTeal}}}] (xelatex)
+              (pdftex) edge[onslide={<7>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<4>{black!2, myfading={blue}{mDarkTeal}}}] (pdflatex)
+              (pdftex) edge[onslide={<9>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<4>{black!2, myfading={blue}{mDarkTeal}}}] (lualatex)
+              (luatex) edge[onslide={<9>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<6>{black!2, myfading={blue}{mDarkTeal}}}] (lualatex)
+              (luatex) edge[onslide={<10>{black!2, myfading={mDarkTeal}{blue}}}, onslide={<6>{black!2, myfading={blue}{mDarkTeal}}}] (context);
     \end{tikzpicture}
 \end{document}

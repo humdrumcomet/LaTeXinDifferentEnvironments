@@ -1,4 +1,7 @@
 % arara: lualatex: { shell: true, interaction: nonstopmode }
+% arara: makeglossaries
+% arara: biber
+% arara: lualatex: { shell: true, interaction: nonstopmode }
 % arara: lualatex: { synctex: true, shell: true, interaction: nonstopmode }
 
 \providecommand{\toplevel}{..}
@@ -17,6 +20,15 @@
 \input{\importPath/glossary}
 \input{\importPath/symbols}
 
+\luastringsubs{
+  {Acorn-RiscPC-LaTeX.pdf}={\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf},
+
+}{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf_tex}{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-pdf-tex.tex}
+\luastringsubs{
+  {Acorn-RiscPC-LaTeX.pdf}={\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf},
+
+}{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX.pdf_tex}{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-path.tex}
+
 
 \title{\LaTeX~in Different Environments}
 \author{Ghassan Arnouk \and
@@ -31,11 +43,11 @@
         \frametitle{Contents}
         \tableofcontents
     \end{frame}
-    \section{The \TeX~Family Tree}
-        \begin{frame}
-            \frametitle{The Most Common Members}
-            \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}
-        \end{frame}
+    % \section{The \TeX~Family Tree}
+    %     \begin{frame}
+    %         \frametitle{The Most Common Members}
+    %         \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/texfamilytree/texfamilytree}
+    %     \end{frame}
     \section{Processing \TeX~Files}
         \begin{frame}[fragile]
             \frametitle{Manually in Shell/Bash/Etc.}
@@ -121,6 +133,7 @@
                     \only<4>{\includestandalone[mode=tex, width=\textwidth]{\assetPath/Code/examplePlot}}
                 \end{column}\hfill
                 \begin{column}[T]{0.2\textwidth}
+                    \centering
                     \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/matplotlibFlow/matplotlibflow}
                 \end{column}
             \end{columns}
@@ -146,30 +159,65 @@
                     }
                 \end{column}\hfill
                 \begin{column}[T]{0.2\textwidth}
+                    \centering
                     \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/sympyFlow/sympyflow}
                 \end{column}
             \end{columns}
         \end{frame}
         \begin{frame}
             \frametitle{Inkscape - Drawing and Manipulating Vector Graphics}
-            % \begin{columns}[onlytextwidth]
-            %     \begin{column}[T]{0.75\textwidth}
-            %         \begin{onlyenv}<1>
-            %         \end{onlyenv}
-            %         \begin{onlyenv}<2>
-            %         \end{onlyenv}
-            %         \only<3>{
-            %             \centering
-            %             \def\svgwidth{\columnwidth}
-            %             \luastringsubs{
-            %             {y' (rad)}={$y^{\prime}(\si{\radian})$},
-            %             {y (m)}={$y(\si{\meter})$}
-            %             }{./demoout.pdf_tex}
-            %         }
-            %     \end{column}\hfill
-            %     \begin{column}[T]{0.2\textwidth}
-            %         \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/sympyFlow/sympyflow}
-            %     \end{column}
-            % \end{columns}
+            \begin{columns}[onlytextwidth]
+                \begin{column}[T]{0.75\textwidth}
+                    \only<1>{
+                        \begin{figure}
+                        \centering
+                        \includegraphics[height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-PDF-Original}
+                        \caption{Original vector graphic block diagram of the Acorn Risc PC \cite{ref:01}}
+                        \label{fig:texsub}
+                        \end{figure}
+                    }
+                    \only<2>{
+                        \begin{figure}
+                        \centering
+                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-pdf-tex}
+                        \caption{Directly incorporating Inkscape PDF+\TeX~export of the Acorn Risc PC block diagram}
+                        \label{fig:texsub}
+                        \end{figure}
+                    }
+                    \only<3>{
+                        \begin{figure}
+                        \centering
+                        \includestandalone[mode=tex, height=0.7\textheight]{\assetPath/Images/InkscapeDemo/Acorn-RiscPC-LaTeX-subbed-path}
+                        \caption{Inkscape PDF+\TeX~of the Acorn Risc PC block diagram with substitution of text via \hologo{LuaLaTeX}}
+                        \label{fig:texsub}
+                        \end{figure}
+                    }
+                \end{column}\hfill
+                \begin{column}[T]{0.2\textwidth}
+                    \centering
+                    \includestandalone[mode=tex, width=\textwidth]{\assetPath/Images/Tikz/inkscapeFlow/inkscapeflow}
+                \end{column}
+            \end{columns}
+        \end{frame}
+    \section{Backmatter}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Bibliography}
+            \printbibliography
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Acronyms}
+            \printglossary[type=\acronymtype]
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Glossary}
+            \printglossary[type=main]
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Constants}
+            \printglossary[type=constants, nonumberlist, nopostdot]
+        \end{frame}
+        \begin{frame}[allowframebreaks]
+            \frametitle{Symbols}
+            \printglossary[type=symbols]
         \end{frame}
 \end{document}

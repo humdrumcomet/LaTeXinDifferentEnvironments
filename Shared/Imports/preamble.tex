@@ -148,7 +148,7 @@ table-align-comparator = true,
                     \pgfpathcircle{\pgfpointorigin}{\pgflinewidth};
                     \pgfusepath{fill};
                 },
-                mark=at position \pgfdecoratedpathlength with {\arrow[#2, >=latex, xshift=0.35\pgflinewidth]{>}},
+                mark=at position 1 with {\arrow[#2, >=latex, auto]{>}},
             }
         }
     },
@@ -203,12 +203,11 @@ table-align-comparator = true,
     path = "\luacodePath"
     demo = require(path.."/searchandreplace")
 }
-\newcommand\luastringsubs[2]{%
+\newcommand\luastringsubs[3]{%
     \directlua{
-        replacementsPreTable = [[#1]]
-        filepath = [[#2]]
-        subbedString = stringReplaceFromFile(replacementsPreTable, filepath)
-        -- print(subbedString)
-        -- tex.sprint(subbedString)
+        replacementsPreTable = [[\unexpanded{#1}]]
+        filePathIn = [[#2]]
+        filePathOut = [[#3]]
+        subbedString = stringReplaceFromFile(replacementsPreTable, filePathIn, filePathOut)
     }%
 }

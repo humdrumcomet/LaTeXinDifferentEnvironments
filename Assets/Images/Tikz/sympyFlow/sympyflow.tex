@@ -15,7 +15,7 @@
 \begin{document}
     \begin{tikzpicture}[thick]
         \draw (0,0) node[rectangle, draw, onslide=<1>{blue}, minimum width=24mm, minimum height = 10mm](pycode){Python Code};
-        \draw[->, >=Stealth, onslide=<2>{blue}] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm](latexcode){\LaTeX~Code};
-        \draw[->, >=Stealth, onslide=<3>{blue}] (latexcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm,align=center](equations){Typeset\\Equation};
+        \draw[->, >=Stealth] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, onslide=<2>{blue}](latexcode){\LaTeX~Code};
+        \draw[->, >=Stealth] (latexcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm,align=center, onslide=<3>{blue}](equations){Typeset\\Equation};
     \end{tikzpicture}
 \end{document}

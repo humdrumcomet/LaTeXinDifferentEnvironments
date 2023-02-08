@@ -1,21 +1,11 @@
+-- convert list of targets and their substitution from text to a table where the key is the value to be replaced, and the value is the text being substituted
 function optsToTable(opts)
     if opts == 'empty' then
         return {}
     end
     local interTbl = {}
     local inputs = {}
-    -- local quotePat = "(%.+)%s*=%s*(%b''),*"
-    -- local quoteRm = "%.+%s*=%s*%b'',*"
     local brackPat = '%s*(%b{})%s*=%s*(%b{}),*'
-    -- local brackRm = '%.+%s*=%s*%b{},*'
-    -- local commaPat = '([^,]+)'
-    -- local equalsPat = '(%.+)%s*=%s*(.*),*'
-    -- for key, value in string.gmatch(opts, quotePat) do
-    --     local inter = string.gsub(value, "'$", "")
-    --     local item = string.gsub(inter, "^'", "")
-    --     inputs[key] = item
-    --     print(inputs[key])
-    -- end
     for key, value in string.gmatch(opts, brackPat) do
         keymod = regexEsc(string.gsub(string.gsub(key, "^{", ""), "}$", ""))
         valuemod = string.gsub(string.gsub(value, "^{", ""), "}$", "")
@@ -23,17 +13,10 @@ function optsToTable(opts)
         print(keymod)
         print(valuemod)
     end
-    -- local strItemRemoved = string.gsub(opts, quoteRm, '')
-    -- local tblItemRemoved = string.gsub(strItemRemoved, brackRm, '')
-    -- for set in string.gmatch(tblItemRemoved, commaPat) do
-    --     for key, value in string.gmatch(set, equalsPat) do
-    --         inputs[key] = value
-    --         print(inputs[key])
-    --     end
-    -- end
     return inputs
 end
 
+-- Strings used for regex must have special characters escaped, so make run keys (the target string) through regexEsc
 function regexEsc(x)
    return (x:gsub('%%', '%%%%')
             :gsub('^%^', '%%^')
@@ -49,9 +32,10 @@ function regexEsc(x)
             :gsub('%?', '%%?'))
 end
 
-function stringReplaceFromFile(replacementsPreTable, filepath)
+function stringReplaceFromFile(replacementsPreTable, filePathIn, filePathOut)
     local optsTable = optsToTable(replacementsPreTable)
-    local fileIn = io.open(filepath)
+    local fileIn = io.open(filePathIn, 'r')
+    local fileOut = io.open(filePathOut, 'w')
     local replacedString = ''
     local lineRemain = ''
     local netSub = 0
@@ -70,8 +54,11 @@ function stringReplaceFromFile(replacementsPreTable, filepath)
         else
             print(netSub)
         end
-        tex.sprint(lineRemain)
+        fileOut:write(lineRemain, "\n")
     end
+
+    fileIn:close()
+    fileOut:close()
 
     return replacedString
 end

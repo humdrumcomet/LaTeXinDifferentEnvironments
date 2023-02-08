@@ -15,8 +15,8 @@
 \begin{document}
     \begin{tikzpicture}[thick]
         \draw (0,0) node[rectangle, draw, onslide=<1>{blue}, minimum width=24mm, minimum height = 10mm](pycode){Python Code};
-        \draw[->, >=Stealth, onslide=<2>{blue}] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm](pgfcode){pgf code};
-        \draw[->, >=Stealth, onslide=<3>{blue}] (pgfcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm](latexinput){include};
-        \draw[->, >=Stealth, onslide=<4>{blue}] (latexinput) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm](latexplot){plot};
+        \draw[->, >=Stealth] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, onslide=<2>{blue}](pgfcode){pgf code};
+        \draw[->, >=Stealth] (pgfcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, onslide=<3>{blue}](latexinput){include};
+        \draw[->, >=Stealth] (latexinput) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, onslide=<4>{blue}](latexplot){plot};
     \end{tikzpicture}
 \end{document}

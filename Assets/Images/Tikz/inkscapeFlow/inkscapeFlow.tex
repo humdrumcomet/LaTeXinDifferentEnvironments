@@ -1,0 +1,21 @@
+% arara: lualatex: { shell: true}
+% arara: lualatex: { shell: true}
+
+\providecommand{\toplevel}{../../../..}
+\providecommand{\importPath}{\toplevel/Shared/Imports}
+\providecommand{\assetPath}{\toplevel/Assets}
+\providecommand{\sharedPath}{\toplevel/Shared}
+
+\documentclass[tikz, hidelinks, float=false, crop=false]{standalone}
+
+\input{\importPath/preamble}
+\input{\importPath/glossary}
+\input{\importPath/symbols}
+
+\begin{document}
+    \begin{tikzpicture}[thick]
+        \draw (0,0) node[rectangle, draw, onslide=<1>{blue}, minimum width=24mm, minimum height = 10mm, align=center](pycode){Vector\\Graphic};
+        \draw[->, >=Stealth] (pycode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, align=center, onslide=<2>{blue}](latexcode){Inkscape\\PDF+\TeX};
+        \draw[->, >=Stealth] (latexcode) -- ++(0,-2) node[rectangle, draw, anchor=north, minimum width=24mm, minimum height = 10mm, align=center, onslide=<3>{blue}](equations){Integrated\\Figure};
+    \end{tikzpicture}
+\end{document}
