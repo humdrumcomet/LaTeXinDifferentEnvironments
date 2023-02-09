@@ -1,0 +1,486 @@
+{
+	// Place your snippets for latex here. Each snippet is defined under a snippet name and has a prefix, body and description. 
+	// The prefix is what is used to trigger the snippet and the body will be expanded and inserted. 
+	// Possible variables are: $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+
+	// Insert a new line? You can enable this by typing `,`
+	// Insert a tab or multiple tabs? You can enable this by typing `\t` or `\t\t`
+	// Escape the \? You can perform this by typing `\\`
+	// Navigate between snippet placeholders? You can perform this using `tab` to move forward and `Shift+tab` to move backward
+	// Update the same variable within a snippet? You can perform this using the same placeholder in multiple places
+
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');"
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+
+	// Figures
+
+	// Insert noindent command
+	"Insert noindent command": {
+		"prefix": "ni",
+		"body": [
+			"\\noindent ${1:<++>}",
+			"${0:<++>}"
+		],
+		"description": "Insert noindent command"
+	},
+
+
+	// Insert figure environment
+	"Insert figure environment": {
+		"prefix": "fg",
+		"body": [
+			"\\begin{figure}[htbp]",
+			"\t\\centering",
+			"\t\\includegraphics[width=${1:<++>}\\linewidth]{${2:picName}.png}",
+			"\t\\caption{${3:<++>}}",
+			"\t\\label{fig:${4:<++>}}",
+			"\\end{figure}",
+			"${0:<++>}"
+		],
+		"description": "Insert figure environment"
+	},
+
+	// Insert sub-figure environment
+	"Insert sub-figure environment": {
+		"prefix": "sfg",
+		"body": [
+			"\\begin{figure}[htbp]",
+			"\t\\centering\\captionsetup{format=hang}",
+			"\t\\begin{subfigure}[t]{0.475\\textwidth}",
+			"\t\t\\centering\\captionsetup{format=hang}",
+			"\t\t\\includegraphics[width=\\textwidth]{${1:imgName}.png}",
+			"\t\t\\caption{${2:<++>}}",
+			"\t\t\\label{${3:<++>}}",
+			"\t\\end{subfigure}%",
+			"\t\\hfill",
+			"\t\\begin{subfigure}[t]{0.475\\textwidth}",
+			"\t\t\\centering\\captionsetup{format=hang}",
+			"\t\t\\includegraphics[width=\\textwidth]{${4:imgName}.png}",
+			"\t\t\\caption{${5:<++>}}",
+			"\t\t\\label{${6:<++>}}",
+			"\t\\end{subfigure}%",
+			"\t\\caption{${7:<++>}}",
+			"\t\\label{${8:<++>}}",
+			"\\end{figure}",
+			"${0:<++>}"
+		],
+		"description": "Insert sub-figure environment"
+	},
+
+
+	// Tables
+
+	// Insert csvAutoTabular command
+	"Insert csvAutoTabular command": {
+		"prefix": "atb",
+		"body": [
+			"\\being{table}[htbp]",
+			"\t\\centering",
+			"\t\\caption{${1:<++>}}",
+			"\t\\csvautotabular{Imports/Data/${2:<++>}.csv}",
+			"\t\\label{tab:${3:<++>}}",
+			"\\end{table}",
+			"${0:<++>}"
+		],
+		"description": "Insert csvAutoTabular command"	
+	},
+
+	// The following Table commands are under review
+	
+	"Insert table environment": {
+		"prefix": "tb",
+		"body": [
+			"\\being{table}[htbp]",
+			"\t\\centering",
+			"\t\\caption{${1:<++>}}",
+			"\t\\begin{tabular}{${2:<++>}}",
+			"\t\t\\csvreader[${3:<++>}]{${4:<++>}}{}",
+			"\t\t${5:<++>}",
+			"\t\\end{tabular}",
+			"\t\\label{tab:${6:<++>}}",
+			"\\end{table}",
+			"${0:<++>}"
+		],
+		"description": "Insert table environment"	
+	},
+
+
+	"Insert long table environment": {
+		"prefix": "ltb",
+		"body": [
+			"\\being{longtable}[htbp]",
+			// "\t\\centering",
+			"\t\\caption{${1:<++>}}",
+			"\t\\begin{tabular}{${2:<++>}}",
+			"\t\t\\csvreader[${3:<++>}]{${4:<++>}}{}",
+			"\t\t${5:<++>}",
+			"\t\\end{tabular}",
+			"\t\\label{tab:${6:<++>}}",
+			"\\end{longtable}",
+			"${0:<++>}"
+		],
+		"description": "Insert long table environment"	
+	},
+
+
+	"Insert old table environment": {
+		"prefix": "otb",
+		"body": [
+			"\\being{table}[htbp]",
+			"\t\\centering",
+			"\t\\caption{${1:<++>}}",
+			"\t\\begin{tabular}{${2:<++>}}",
+			"\t\t${3:<++>} & ${4:<++>} & ${5:<++>}",
+			"\t\t\\hline\\hline",
+			"\t\t${6:<++>} & ${7:<++>} & ${8:<++>}",
+			"\t\t\\hline",
+			"\t\t${9:<++>}",
+			"\t\\end{tabular}",
+			"\t\\label{tab:${10:<++>}}",
+			"\\end{table}",
+			"${0:<++>}"
+		],
+		"description": "Insert old table environment"	
+	},
+
+	// Lists
+
+	// Insert itemize environment
+	"Insert itemize environment": {
+		"prefix": "item",
+		"body": [
+			"\\begin{itemize}",
+			"\t\\item ${1:<++>}",
+			"\\end{itemize}",
+			"${0:<++>}"
+		],
+		"description": "Insert itemize environment"	
+	},
+
+	// Insert enumerate environment
+	"Insert enumerate environment": {
+		"prefix": "enu",
+		"body": [
+			"\\begin{enumerate}",
+			"\t\\item ${1:<++>}",
+			"\\end{enumerate}",
+			"${0:<++>}"
+		],
+		"description": "Insert enumerate environment"	
+	},
+
+	// Insert description environment
+	"Insert description environment": {
+		"prefix": "des",
+		"body": [
+			"\\begin{description}",
+			"\t\\item ${1:<++>}",
+			"\\end{description}",
+			"${0:<++>}"
+		],
+		"description": "Insert description environment"	
+	},
+
+	// Equations
+
+	// Insert therefore symbol
+	"Insert therefore symbol": {
+		"prefix": "th",
+		"body": [
+			"\\therefore ${0:<++>}",
+		],
+		"description": "Insert therefore symbol"	
+	},
+
+	// Insert no number command
+	"Insert nonumber command": {
+		"prefix": "nnu",
+		"body": [
+			"\\nonumber",
+		],
+		"description": "Insert nonumber command"	
+	},
+
+	// Insert equation environment
+	"Insert equation environment": {
+		"prefix": "eq",
+		"body": [
+			"\\begin{equation}",
+			"\t${1:<++>}",
+			"\t\\label{eqt:${2:<++>}}",
+			"\\end{equation}",
+			"${0:<++>}"
+		],
+		"description": "Insert equation environment"	
+	},
+
+	// Insert unnumbered equation environment
+	"Insert unnumbered equation environment": {
+		"prefix": "ueq",
+		"body": [
+			"\\begin{equation*}",
+			"\t${1:<++>}",
+			"\t\\label{eqt:${2:<++>}}",
+			"\\end{equation*}",
+			"${0:<++>}"
+		],
+		"description": "Insert unnumbered equation environment"	
+	},
+
+	// Insert subequation environment
+	"Insert subequation environment": {
+		"prefix": "seq",
+		"body": [
+			"\\begin{subequation}",
+			"\t\\begin{algin}",
+			"\t\t${1:<++>}",
+			"\t\t\\label{eqt:${2:<++>}}",
+			"\t\\end{algin}",
+			"\\end{subequation}",
+			"${0:<++>}"
+		],
+		"description": "Insert subequation environment"	
+	},
+
+	// Insert align environment
+	"Insert align environment": {
+		"prefix": "al",
+		"body": [
+			"\\begin{align}",
+			"\t${1:<++>}",
+			"\t\\label{eqt:${2:<++>}}",
+			"\\end{align}",
+			"${0:<++>}"
+		],
+		"description": "Insert align environment"	
+	},
+
+	// Insert unnumbered align environment
+	"Insert unnumbered align environment": {
+		"prefix": "ual",
+		"body": [
+			"\\begin{align*}",
+			"\t${1:<++>}",
+			"\t\\label{eqt:${2:<++>}}",
+			"\\end{align*}",
+			"${0:<++>}"
+		],
+		"description": "Insert unnumbered align environment"	
+	},
+
+	// Mathematics
+
+	// Insert SI units command
+	"Insert SI units command": {
+		"prefix": "si",
+		"body": [
+			"\\SI{${1:<++>}}{${2:<++>}} ${0:<++>}"
+		],
+		"description": "Insert SI units command"	
+	},
+
+
+	// Insert fraction command
+	"Insert fraction command": {
+		"prefix": "fr",
+		"body": [
+			"\\frac{${1:<++>}}{${2:<++>}} ${0:<++>}"
+		],
+		"description": "Insert fraction command"	
+	},
+
+	// Insert more spaced fraction command
+	"Insert more spaced fraction command": {
+		"prefix": "ddfr",
+		"body": [
+			"\\ddfrac{${1:<++>}}{${2:<++>}} ${0:<++>}"
+		],
+		"description": "Insert more spaced fraction command"	
+	},
+
+
+	// Cancels
+	
+	// Insert cancel command
+	"Insert cancel command": {
+		"prefix": "can",
+		"body": [
+			"\\cancel{${1:<++>}} ${0:<++>}"
+		],
+		"description": "Insert cancel command"	
+	},
+
+	// Insert back cancel command
+	"Insert back cancel command": {
+		"prefix": "bcan",
+		"body": [
+			"\\bcancel{${1:<++>}} ${0:<++>}"
+		],
+		"description": "Insert back cancel command"	
+	},
+
+	// Insert x cancel command
+	"Insert x cancel command": {
+		"prefix": "bcan",
+		"body": [
+			"\\xcancel{${1:<++>}} ${0:<++>}"
+		],
+		"description": "Insert x cancel command"	
+	},
+	
+	// Insert cancel to command
+	"Insert cancel to command": {
+		"prefix": "cant",
+		"body": [
+			"\\cancelto{${1:<++>}}{${2:<++>}} ${0:<++>}"
+		],
+		"description": "Insert cancel to command"	
+	},
+
+	
+	// Page break
+
+	// Insert pagebreak command
+	// \pagebreak: forces a new page
+	// In twosided documents, pagebreak clears the first column and puts text in the second column of the same page
+	"Insert pagebreak command": {
+		"prefix": "pgb",
+		"body": [
+			"\\pagebreak",
+			"${0:<++>}"
+		],
+		"description": "Insert pagebreak command"	
+	},
+	
+	// Insert clearpage command
+	// \clearpage: ends a page, and puts pending tables and figures on separate float pages with no text
+	// In twosided documents, clearpage clears both columns and puts text on the following page
+	"Insert clearpage command": {
+		"prefix": "pgb",
+		"body": [
+			"\\pagebreak",
+			"${0:<++>}"
+		],
+		"description": "Insert clearpage command"	
+	},
+
+
+	// Hyper referencing
+
+	// Insert reference command
+	"Insert reference command": {
+		"prefix": "ref",
+		"body": [
+			"\\ref{${1:<++>}:${2:<++>}} ${0:<++>}"
+		],
+		"description": "Insert reference command"	
+	},
+
+	// Insert hyper reference command
+	"Insert hyper reference command": {
+		"prefix": "ref",
+		"body": [
+			"\\href[${1:<++>}:${2:<++>}]{${3:<++>}} ${0:<++>}"
+		],
+		"description": "Insert hyper reference command"	
+	},
+
+
+
+
+
+
+
+	// Sections, Subsections, and Subsubsections
+
+	// Insert section environment
+	"Insert section environment": {
+		"prefix": "sec",
+		"body": [
+			"\\section{${1:<++>}}", 
+			"\\label{sct:${2:<++>}}",
+			"${0:<++>}"
+		],
+		"description": "Insert section environment"	
+	},
+
+	// Insert subsection environment
+	"Insert subsection environment": {
+		"prefix": "ssec",
+		"body": [
+			"\\subsection{${1:<++>}}", 
+			"\\label{ssct:${2:<++>}}",
+			"${0:<++>}"
+		],
+		"description": "Insert subsection environment"	
+	},
+
+	// Insert subsubsection environment
+	"Insert subsubsection environment": {
+		"prefix": "sssec",
+		"body": [
+			"\\subsubsection{${1:<++>}}", 
+			"\\label{sssct:${2:<++>}}",
+			"${0:<++>}"
+		],
+		"description": "Insert subsubsection environment"	
+	},
+
+
+	// Insert unnumbered section environment
+	"Insert unnumbered section environment": {
+		"prefix": "usec",
+		"body": [
+			"\\section*{${1:<++>}}", 
+			"\\label{sct:${2:<++>}}",
+			"${0:<++>}"
+		],
+		"description": "Insert unnumbered section environment"	
+	},
+
+	// Insert unnumbered subsection environment
+	"Insert unnumbered subsection environment": {
+		"prefix": "ussec",
+		"body": [
+			"\\subsection*{${1:<++>}}", 
+			"\\label{ssct:${2:<++>}}",
+			"${0:<++>}"
+		],
+		"description": "Insert unnumbered subsection environment"	
+	},
+
+	// Insert unnumbered subsubsection environment
+	"Insert unnumbered subsubsection environment": {
+		"prefix": "usssec",
+		"body": [
+			"\\subsubsection*{${1:<++>}}", 
+			"\\label{sssct:${2:<++>}}",
+			"${0:<++>}"
+		],
+		"description": "Insert unnumbered subsubsection environment"	
+	},
+
+	// Insert verbatim environment
+	"Insert verbatim environment": {
+		"prefix": "ver",
+		"body": [
+			"\\begin{verbatim}",
+			"\t${1:<++>}",
+			"\\end{verbatim}",
+			"${0:<++>}"
+		],
+		"description": "Insert verbatim environment"	
+	},
+
+
+
+}
